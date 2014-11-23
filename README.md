@@ -88,7 +88,7 @@ The "packets" object represents an ordered sequence of the captured signaling pa
  "src"       | object  | Required. The identification details of the source (sender) of the packet.
  "dst"       | object  | Required. The identification details of the destination (receiver) of the packet.
  "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" is assumed.
- "body"      | string or array | Required. The actual data of captured signaling packet, according to the "format" string.
+ "body"      | string or array | Required. The actual data of captured signaling packet, represented according to the specified "format".
  "comment"   | string  | Optional. A comment provided by the user or the application about the packet.
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
