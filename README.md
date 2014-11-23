@@ -45,7 +45,7 @@ An ALSA file is REQUIRED to be saved in UTF-8 encoding. Other encodings are forb
 
 ###4.2 List of objects
 
-####4.2.1 ALSA
+####4.2.1 alsa
 
 This object represents the root of the exported data. This object MUST be present and its name MUST be "alsa". The object contains the following name/value pairs:
 
