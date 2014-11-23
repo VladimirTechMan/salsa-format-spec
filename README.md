@@ -58,7 +58,7 @@ This object represents the root of the exported data. This object MUST be presen
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
  "packets"   | array   | Required. An array of objects of type packet, each representing one exported (captured) signaling protocol packet.
 
-For the sake of compatibility, all string values for "protocol" and "transport" are given in lower case. Using standard protocol names (or the commonly established protocol names, if they are non-standard yet) is REQUIRED. For example, "sip", "xmpp", "jingle", "json", "http", "sdp", etc.
+For the sake of compatibility, all string values for "protocol" and "transport" are given in lower case. Using standard protocol names (or the commonly established protocol names, if they are non-standard yet) is REQUIRED. For example, "sip", "xmpp", "json", "http", "sdp", etc.
 
 For the "transport" entry, the following values are suggested in this version of the ALSA format: "udp", "tcp", "websocket", "webrtc-datachannel". Please, note that in this case the transport name is not necessarily limited to the actual transport protocol being used (as "udp" and "tcp" are, for example), but may also reflect the actual mechanism being used to exchange the signaling packets (for instance, "websocket", which is built on top of TCP, or "webrtc-datachannel", which is essentially SCTP over UDP). Going forward, more values may be added. (For example, it is not clear yet if adding "tls" and "dtls", in addition to general "tcp" and "udp" transports, would be beneficial for practical purposes of ALSA.)
 
