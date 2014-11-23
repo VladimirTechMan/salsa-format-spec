@@ -1,4 +1,4 @@
-ALSA Format 0.1 Specification
+ALSA Format 0.2 Specification
 =============================
 
 Author: Vladimir "VladimirTechMan" Beloborodov, \<VladimirTechMan@gmail.com\>
@@ -53,10 +53,15 @@ This object represents the root of the exported data. This object MUST be presen
  ------------|---------|------------
  "version"   | string  | Required. Version number of the format.
  "creator"   | object  | Optional. An object of type creator that contains the name and version information of the log creator application.
+ "startedDateTime" | string | Optional. The date and time stamp for the beginning of capturing the packets represented in the given ALSA-formatted file. Formatted according to ISO 8601.
  "comment"   | string  | Optional. A comment provided by the user or the application.
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
  "packets"   | array   | Required. An array of objects of type packet, each representing one exported (captured) signaling protocol packet.
+
+For a specific ALSA-formatted file, the "startedDateTime" string value MUST represent the moment when the application that captured packets represented in this file was ready to capture them. The individual "time" values of "packet" objects, in the "packets" array, MUST be calculated relative to this time moment. The ALSA creator application SHOULD provide the "startedDateTime" whenever this information is available to it. In case if the ALSA creator application cannot get the absolute timing for the moment when capturing signaling packets was started, or when there is a specific reason to not provide (disclose) that information to the ALSA format consumers, it still MUST properly calculate the "time" values of "packet" objects relative to that initial moment. In the case when the ALSA creator application cannot even get the information about the moment when capturing packets was actually started, it SHOULD assume that the capturing was started at the moment of dumping the first (the earliest) packet represented in the "packets" array, thus its "time" value becomes zero and the "time" values of all later packets represnted in the "packets" array are relative to this moment.
+
+The "startedDateTime" string value MUST be formatted in accordance with the ISO 8601 format for combined date and time in a specific timezone, and include seconds and, at least, thousandth fractions of a second to support the millisecond precision. Thus, the format is like "YYYY-MM-DDThh:mm:ss.sssTZD". For example, "2013-10-22T17:18:30.457+03:00". When a sub-millisecond precision is supported, the application may use a longer fractional part for the seconds unit in the format. A conversion between the string format given and the absolute internal clock timing on a particular system is expected to be quite straightforward and easy to implement, either with a readity available system library or an external library that is capable of handling date and timing formats according to ISO 8601, or with a simple regular expression (or a similar mechanism) to parse the string and the string formattng mechanisms available.
 
 For the sake of compatibility, all string values for "protocol" and "transport" are given in lower case. Using standard protocol names (or the commonly established protocol names, if they are non-standard yet) is REQUIRED. For example, "sip", "xmpp", "json", "http", "sdp", etc.
 
@@ -82,7 +87,7 @@ The "packets" object represents an ordered sequence of the captured signaling pa
 
   JSON Name  |JSON Type| Description
  ------------|---------|------------
- "time"      | string  | Required. Packet capture time, in milliseconds, formatted as a string. (A fractional part for sub-millisecond precision is allowed.)
+ "time"      | string  | Required. Packet capture time, in milliseconds, relative to the moment when capturing was started. The value is formatted as a string. A fractional part for sub-millisecond precision is allowed.
  "protocol"  | string  | Optional. The name of the signaling protocol of the packet.
  "transport" | string  | Optional. The name of the transport being used to transmit the packet.
  "src"       | object  | Required. The identification details of the source (sender) of the packet.
@@ -93,6 +98,10 @@ The "packets" object represents an ordered sequence of the captured signaling pa
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
 
+The "time" value in a "packet" object MUST be calculated relative to the moment when the application started capturing the packets represented in the specific ALSA-formatted file. When the ALSA creator application also provides the "startedDateTime" value in the "alsa" object, the consumers of the ALSA format can easily calculate the absolute timestamps of individual packets. At the very same time, when the "startedDateTime" value is not provided (for example, because it was not available in the original packet capture format being converted to the ALSA representation), the relative values will still provide the information necessary to analyze timings between the packets, etc.
+
+For the sake of efficiency, any ALSA creator application capturing signaling packets in (near-)real-time MAY opt for collecting the absolute timestamps based on the internal system clock, for the moment when capturing packets was started and for each moment when a packet is captured. At the end of the capturing phase, the application then MUST convert the collected absolute timing values of individual packets into the corresponding relative timing values, as per the requirements above. This approach can help to slightly reduce the impact of the capturing activity on the real-time characteristics of the application. (In the case when an ALSA creator application is just converting an existing capture file into the ALSA-formatted representation, such an special approach is not required, of course.)
+
 The "time" values MUST be in milliseconds. The ALSA creator application MAY add a fractional part to those values to provide a sub-millisecond precision, when that is possible.
 
 The "time" string value MUST only contain digits and (optionally) one dot character (.) to delimit the integer part and the fractional part of the numeric value.
@@ -100,8 +109,6 @@ The "time" string value MUST only contain digits and (optionally) one dot charac
 The ALSA format uses a string representation of timestamps, rather than the number type available in the JSON format. That is intentional, for two reasons:
 * It allows a better control over the formatting of the timestamps with a sub-millisecond precision (that is, with a fractional part in them): Some of the available libraries that read and write the JSON format tend to support only a fixed (and non-configurable) maximum number of digits in a fractional part, which may be insufficient for parsing or saving the timestamps in the applications that handle the ALSA format based on those libraries.
 * It allows more flexibility in dealing with longer integer and floating-point numeric values on the architectures and in some (typically, older) programming languages where the basic numeric type(s) do not provide a sufficient value range to hold such numeric values in them without a representation error.
-
-When creating a new file in the ALSA format for the signaling packets captured internally, the ALSA creator application SHOULD use the absolute value of the system time clock, to set the "time" value for the "packet" object (that is, the timestamp of the moment when the application captured the corresponding packet). When creating an ALSA-formatted representation of an existing network trace capture file (for example, of a pcap file), the ALSA creator application MUST use the packet timestamp values available inside that original file to provide the equivalent "time" values, in milliseconds, so that the ALSA representation provides the absolute timestamps according to the system where that original file was captured (during the timeframe when it was captured). In the case if only relative timestamps are available inside the file format being converted to ALSA, or if it is not clear whether the timestamps in the original file represent absolute or relative timing values for the system where the packet capture was performed, then the ALSA creator application SHOULD use those available values, appropriately converting them to the millisecond time units, as requested by this specification. In that latter case, the creator application MAY add a specific note to the "comment" string value of the "alsa" root object, to better document the fact that the meaning of "time" values inside the ALSA-formatted file may be other than "absolute time values".
 
 The ALSA creator application SHOULD specify a "protocol" value for each "packet" object, unless it has specified the "protocol" value in the "alsa" object (which means that all the packets represent the same protocol). When the "protocol" value in the "alsa" object is specified, the creator application SHOULD NOT specify the "protocol" value for each packet.
 
