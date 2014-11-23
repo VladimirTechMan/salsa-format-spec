@@ -1,0 +1,446 @@
+{
+  "alsa": {
+    "version": "0.1",
+    "creator": {
+      "name": "Wireshark Application-Level Signaling Archive (ALSA) exporter",
+      "version": "0.1"
+    },
+    "packets": [
+      {
+        "time": "1105725482965.944",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "dst": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "body": [
+          "INVITE sip:francisco@bestel.com:55060 SIP/2.0",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bK291d90e31a47b225bd0ddff4353e9cc0",
+          "From: <sip:200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>",
+          "Call-ID: 12013223@200.57.7.195",
+          "CSeq: 1 INVITE",
+          "Contact: <sip:200.57.7.195:5060>",
+          "Content-Type: application/sdp",
+          "Content-Length:   229",
+          "",
+          "v=0",
+          "o=Clarent 120386 120387 IN IP4 200.57.7.196",
+          "s=Clarent C5CM",
+          "c=IN IP4 200.57.7.196",
+          "t=0 0",
+          "m=audio 40376 RTP/AVP 8 18 4 0",
+          "a=rtpmap:8 PCMA/8000",
+          "a=rtpmap:18 G729/8000",
+          "a=rtpmap:4 G723/8000",
+          "a=rtpmap:0 PCMU/8000",
+          "a=SendRecv"
+        ]
+      },
+      {
+        "time": "1105725482973.833",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "SIP/2.0 100 Trying",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bK291d90e31a47b225bd0ddff4353e9cc0",
+          "From: <sip:200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>;tag=298852044",
+          "Contact: <sip:francisco@200.57.7.204:5061>",
+          "Call-ID: 12013223@200.57.7.195",
+          "CSeq: 1 INVITE",
+          "Server: X-Lite release 1103m",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725483013.468",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "SIP/2.0 180 Ringing",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bK291d90e31a47b225bd0ddff4353e9cc0",
+          "From: <sip:200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>;tag=298852044",
+          "Contact: <sip:francisco@200.57.7.204:5061>",
+          "Call-ID: 12013223@200.57.7.195",
+          "CSeq: 1 INVITE",
+          "Server: X-Lite release 1103m",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725487022.577",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.205:5061",
+          "ipaddr": "200.57.7.205",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "REGISTER sip:Verso.com SIP/2.0",
+          "Via: SIP/2.0/UDP 200.57.7.205:5061;rport;branch=z9hG4bKDC8595CD770E4317ACBC3B64CF5016C5",
+          "From: Ivan <sip:Ivan@Verso.com>;tag=1516659370",
+          "To: Ivan <sip:Ivan@Verso.com>",
+          "Contact: \"Ivan\" <sip:Ivan@200.57.7.205:5061>",
+          "Call-ID: 46E1C3CB36304F84A020CF6DD3F96461@Verso.com",
+          "CSeq: 37764 REGISTER",
+          "Expires: 1800",
+          "Max-Forwards: 70",
+          "User-Agent: Verso Softphone release 1104w",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725487038.279",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "dst": {
+          "name": "200.57.7.205:5061",
+          "ipaddr": "200.57.7.205",
+          "port": 5061
+        },
+        "body": [
+          "SIP/2.0 200 OK",
+          "Via: SIP/2.0/UDP 200.57.7.205:5061;received=200.57.7.205;rport=5061;branch=z9hG4bKDC8595CD770E4317ACBC3B64CF5016C5",
+          "From: \"Ivan\" <sip:Ivan@Verso.com>;tag=1516659370",
+          "To: \"Ivan\" <sip:Ivan@Verso.com>",
+          "Call-ID: 46E1C3CB36304F84A020CF6DD3F96461@Verso.com",
+          "CSeq: 37764 REGISTER",
+          "Contact: \"Ivan\" <sip:Ivan@200.57.7.205:5061>",
+          "expires: 20",
+          "max-forwards: 70",
+          "user-agent: Verso Softphone release 1104w",
+          "Allow: REFER, INFO, BYE, CANCEL, INVITE",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725491443.869",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "SIP/2.0 200 Ok",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bK291d90e31a47b225bd0ddff4353e9cc0",
+          "From: <sip:200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>;tag=298852044",
+          "Contact: <sip:francisco@200.57.7.204:5061>",
+          "Call-ID: 12013223@200.57.7.195",
+          "CSeq: 1 INVITE",
+          "Content-Type: application/sdp",
+          "Server: X-Lite release 1103m",
+          "Content-Length: 298",
+          "",
+          "v=0",
+          "o=francisco 13004970 13013442 IN IP4 200.57.7.204",
+          "s=X-Lite",
+          "c=IN IP4 200.57.7.204",
+          "t=0 0",
+          "m=audio 8000 RTP/AVP 8 0 3 98 97 101",
+          "a=rtpmap:0 pcmu/8000",
+          "a=rtpmap:8 pcma/8000",
+          "a=rtpmap:3 gsm/8000",
+          "a=rtpmap:98 iLBC/8000",
+          "a=rtpmap:97 speex/8000",
+          "a=rtpmap:101 telephone-event/8000",
+          "a=fmtp:101 0-15"
+        ]
+      },
+      {
+        "time": "1105725491490.081",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "dst": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "body": [
+          "ACK sip:francisco@200.57.7.204:5061 SIP/2.0",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK0f496e3b6e7bd140e0b701071c1245ab",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bKa829b54f167d2bb5b96662b4efa0bbc6",
+          "From: <sip:200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>;tag=298852044",
+          "Call-ID: 12013223@200.57.7.195",
+          "CSeq: 1 ACK",
+          "Contact: <sip:200.57.7.195:5060>",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725500422.973",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "REGISTER sip:bestel.com SIP/2.0",
+          "Via: SIP/2.0/UDP 200.57.7.204:5061;rport;branch=z9hG4bK4E76DAE7C5584B21BF8C5F687296CCA5",
+          "From: america <sip:francisco@bestel.com>;tag=3848902025",
+          "To: america <sip:francisco@bestel.com>",
+          "Contact: \"america\" <sip:francisco@200.57.7.204:5061>",
+          "Call-ID: D3A26FC3974B44ECB5A96E07282903E3@bestel.com",
+          "CSeq: 39241 REGISTER",
+          "Expires: 1800",
+          "Max-Forwards: 70",
+          "User-Agent: X-Lite release 1103m",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725500439.357",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "dst": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "body": [
+          "SIP/2.0 200 OK",
+          "Via: SIP/2.0/UDP 200.57.7.204:5061;received=200.57.7.204;rport=5061;branch=z9hG4bK4E76DAE7C5584B21BF8C5F687296CCA5",
+          "From: \"america\" <sip:francisco@bestel.com>;tag=3848902025",
+          "To: \"america\" <sip:francisco@bestel.com>",
+          "Call-ID: D3A26FC3974B44ECB5A96E07282903E3@bestel.com",
+          "CSeq: 39241 REGISTER",
+          "Contact: \"america\" <sip:francisco@200.57.7.204:5061>",
+          "expires: 20",
+          "max-forwards: 70",
+          "user-agent: X-Lite release 1103m",
+          "Allow: REFER, INFO, BYE, CANCEL, INVITE",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725507275.146",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.205:5061",
+          "ipaddr": "200.57.7.205",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "REGISTER sip:Verso.com SIP/2.0",
+          "Via: SIP/2.0/UDP 200.57.7.205:5061;rport;branch=z9hG4bK360869027AEF4FB8ADE56EC7A775CACD",
+          "From: Ivan <sip:Ivan@Verso.com>;tag=1516659370",
+          "To: Ivan <sip:Ivan@Verso.com>",
+          "Contact: \"Ivan\" <sip:Ivan@200.57.7.205:5061>",
+          "Call-ID: 46E1C3CB36304F84A020CF6DD3F96461@Verso.com",
+          "CSeq: 37765 REGISTER",
+          "Expires: 1800",
+          "Max-Forwards: 70",
+          "User-Agent: Verso Softphone release 1104w",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725507290.736",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "dst": {
+          "name": "200.57.7.205:5061",
+          "ipaddr": "200.57.7.205",
+          "port": 5061
+        },
+        "body": [
+          "SIP/2.0 200 OK",
+          "Via: SIP/2.0/UDP 200.57.7.205:5061;received=200.57.7.205;rport=5061;branch=z9hG4bK360869027AEF4FB8ADE56EC7A775CACD",
+          "From: \"Ivan\" <sip:Ivan@Verso.com>;tag=1516659370",
+          "To: \"Ivan\" <sip:Ivan@Verso.com>",
+          "Call-ID: 46E1C3CB36304F84A020CF6DD3F96461@Verso.com",
+          "CSeq: 37765 REGISTER",
+          "Contact: \"Ivan\" <sip:Ivan@200.57.7.205:5061>",
+          "expires: 20",
+          "max-forwards: 70",
+          "user-agent: Verso Softphone release 1104w",
+          "Allow: REFER, INFO, BYE, CANCEL, INVITE",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725507631.897",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "dst": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "body": [
+          "INVITE sip:francisco@bestel.com:55060 SIP/2.0",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK9a86043a5daf59f4e9afd83eff9fc6e8",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bKf3abad1ad86c86fc9f3fae7f49548564",
+          "From: \"Ivan Alizade\" <sip:5514540002@200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>",
+          "Call-ID: 12015624@200.57.7.195",
+          "CSeq: 1 INVITE",
+          "Contact: <sip:200.57.7.195:5060>",
+          "Content-Type: application/sdp",
+          "Content-Length:   205",
+          "",
+          "v=0",
+          "o=Clarent 121082 121083 IN IP4 200.57.7.196",
+          "s=Clarent C5CM",
+          "c=IN IP4 200.57.7.196",
+          "t=0 0",
+          "m=audio 40360 RTP/AVP 8 18 4",
+          "a=rtpmap:8 PCMA/8000",
+          "a=rtpmap:18 G729/8000",
+          "a=rtpmap:4 G723/8000",
+          "a=SendRecv"
+        ]
+      },
+      {
+        "time": "1105725507640.624",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "SIP/2.0 100 Trying",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK9a86043a5daf59f4e9afd83eff9fc6e8",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bKf3abad1ad86c86fc9f3fae7f49548564",
+          "From: \"Ivan Alizade\" <sip:5514540002@200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>;tag=4098209679",
+          "Contact: <sip:francisco@200.57.7.204:5061>",
+          "Call-ID: 12015624@200.57.7.195",
+          "CSeq: 1 INVITE",
+          "Server: X-Lite release 1103m",
+          "Content-Length: 0",
+          ""
+        ]
+      },
+      {
+        "time": "1105725507658.696",
+        "protocol": "sip",
+        "transport": "udp",
+        "src": {
+          "name": "200.57.7.204:5061",
+          "ipaddr": "200.57.7.204",
+          "port": 5061
+        },
+        "dst": {
+          "name": "200.57.7.195:5060",
+          "ipaddr": "200.57.7.195",
+          "port": 5060
+        },
+        "body": [
+          "SIP/2.0 180 Ringing",
+          "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK9a86043a5daf59f4e9afd83eff9fc6e8",
+          "Via: SIP/2.0/UDP 200.57.7.195:55061;branch=z9hG4bKf3abad1ad86c86fc9f3fae7f49548564",
+          "From: \"Ivan Alizade\" <sip:5514540002@200.57.7.195:55061;user=phone>;tag=GR52RWG346-34",
+          "To: \"francisco@bestel.com\" <sip:francisco@bestel.com:55060>;tag=4098209679",
+          "Contact: <sip:francisco@200.57.7.204:5061>",
+          "Call-ID: 12015624@200.57.7.195",
+          "CSeq: 1 INVITE",
+          "Server: X-Lite release 1103m",
+          "Content-Length: 0",
+          ""
+        ]
+      }
+    ]
+  }
+}
