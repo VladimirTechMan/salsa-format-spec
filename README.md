@@ -1,5 +1,5 @@
-ALSA 0.1 Specification
-======================
+ALSA Format 0.1 Specification
+=============================
 
 Author: Vladimir "VladimirTechMan" Beloborodov, \<VladimirTechMan@gmail.com\>
 
