@@ -3,7 +3,7 @@ ALSA 0.1 Specification
 
 Author: Vladimir "VladimirTechMan" Beloborodov, \<VladimirTechMan@gmail.com\>
 
-*This document is a description of a Application-Level Signaling Archive (ALSA) format that can be used to easily capture, annotate, exchange and process packet flows of different text-based signaling protocols that are used in modern web applications. The need in such a format was largely inspired by the proliferation of WebRTC-based solutions. Yet, it is not limited to WebRTC by any means. For example, this same format can also be useful in the area of traditional SIP-based telephony.*
+*This document is a description of Application-Level Signaling Archive (ALSA) format that can be used to easily capture, annotate, exchange and process packet flows of different text-based signaling protocols that are used in modern web or VoIP applications. The need in such a format was largely inspired by the proliferation of WebRTC-based solutions. Yet, it is not limited to WebRTC by any means. For example, this same format can also be useful in the area of traditional SIP-based telephony.*
 
 ##1 Motivation behind proposing the ALSA format
 
@@ -19,7 +19,7 @@ With that — and with some other practical needs — in mind, the Application-L
 
 ###1.1 Why not HAR?
 
-The HTTP Archive (HAR) format is, indeed, very similar to ALSA. Actually, ALSA was greatly inspired by HAR. But HAR was created largely with the HTTP specifics in mind. And it is tailored for HTTP, and not so much towards capturing traces of arbitrary web-signaling protocols. This is why ALSA is proposed. (As a quick note: It is very easy to combine the "log" root entry of the HAR format and the "alsa" root entry of the ALSA format inside one parent JSON object, shall that be practically useful.)
+The HTTP Archive (HAR) format is, indeed, somewhat similar to ALSA. Actually, ALSA was greatly inspired by HAR. But HAR was created largely with the HTTP specifics in mind. And it is tailored for HTTP, and not so much towards capturing and handling traces of arbitrary text-based signaling protocols used by VoIP and web-applications. This is why ALSA is proposed. (As a quick note: It is very easy to combine the "log" root entry of the HAR format and the "alsa" root entry of the ALSA format inside one parent JSON object, shall that be practically useful.)
 
 ##2 Conformance requirements
 
