@@ -140,7 +140,7 @@ The "name" string value serves the purposes of better documenting/annotating the
 
 In the case where several specific ports on the same IP address are consistently used to exchange specific types of signaling: If the SALSA creator application cannot identify the "port" value, or it opts for not providing that information due to performance considerations, as described above, and yet the creator application is able to distinguish between these specific types of signaling on different ports, it is RECOMMENDED that the application provides and consistently applies different (meaningful) names for those different signaling channels (signaling usages) at the same IP address.
 
-When no better naming is possible, the SALSA creator application SHOULD use a name representing the combination of the "ipaddr" and "port" values, with appropriate formatting. For example, "192.168.34.17:5070" in case of IPv4 and "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6. That approach allows the users of SALSA-formatted files to easily provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive one. 
+When no better naming is possible, the SALSA creator application SHOULD use a name representing the combination of the "ipaddr" and "port" values, with appropriate formatting. For example, alike to "192.168.34.17:5070" in case of IPv4 and alike to "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6. That approach allows the users of SALSA-formatted files to easily provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive one. 
 
 ##5 Versioning Scheme
 
