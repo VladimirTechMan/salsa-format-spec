@@ -1,13 +1,14 @@
 {
-  "alsa": {
-    "version": "0.1",
+  "salsa": {
+    "version": "0.2",
     "creator": {
-      "name": "Wireshark Application-Level Signaling Archive (ALSA) exporter",
+      "name": "TShark exporter to Simple Application-Level Signaling Archive (SALSA) format",
       "version": "0.1"
     },
+    "startedDateTime": "2005-01-14T11:58:02.965",
     "packets": [
       {
-        "time": "1105725482965.944",
+        "time": "0.000",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -46,7 +47,7 @@
         ]
       },
       {
-        "time": "1105725482973.833",
+        "time": "7.889",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -74,7 +75,7 @@
         ]
       },
       {
-        "time": "1105725483013.468",
+        "time": "47.524",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -102,7 +103,7 @@
         ]
       },
       {
-        "time": "1105725487022.577",
+        "time": "4056.633",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -131,7 +132,7 @@
         ]
       },
       {
-        "time": "1105725487038.279",
+        "time": "4072.335",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -161,7 +162,7 @@
         ]
       },
       {
-        "time": "1105725491443.869",
+        "time": "8477.925",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -203,7 +204,7 @@
         ]
       },
       {
-        "time": "1105725491490.081",
+        "time": "8524.137",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -230,7 +231,7 @@
         ]
       },
       {
-        "time": "1105725500422.973",
+        "time": "17457.029",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -259,7 +260,7 @@
         ]
       },
       {
-        "time": "1105725500439.357",
+        "time": "17473.413",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -289,7 +290,7 @@
         ]
       },
       {
-        "time": "1105725507275.146",
+        "time": "24309.202",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -318,7 +319,7 @@
         ]
       },
       {
-        "time": "1105725507290.736",
+        "time": "24324.792",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -348,7 +349,7 @@
         ]
       },
       {
-        "time": "1105725507631.897",
+        "time": "24665.953",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -386,7 +387,7 @@
         ]
       },
       {
-        "time": "1105725507640.624",
+        "time": "24674.680",
         "protocol": "sip",
         "transport": "udp",
         "src": {
@@ -414,7 +415,7 @@
         ]
       },
       {
-        "time": "1105725507658.696",
+        "time": "24692.752",
         "protocol": "sip",
         "transport": "udp",
         "src": {
