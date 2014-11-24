@@ -3,7 +3,7 @@ SALSA Format 0.2 Specification
 
 Author: Vladimir "VladimirTechMan" Beloborodov, \<VladimirTechMan@gmail.com\>
 
-*This document is a description of Simple Application-Level Signaling Archive (SALSA) format that can be used to easily capture, annotate, exchange and process packet flows of different text-based signaling protocols that are used in modern web or VoIP applications. The need in such a format was largely inspired by the proliferation of WebRTC-based solutions. Yet, it is not limited to WebRTC by any means. For example, this same format can also be useful in the area of traditional SIP-based telephony.*
+*This document is a description of Simple Application-Level-Signaling Archive (SALSA) format that can be used to easily capture, annotate, exchange and process packet flows of different text-based signaling protocols that are used in modern web or VoIP applications. The need in such a format was largely inspired by the proliferation of WebRTC-based solutions. Yet, it is not limited to WebRTC by any means. For example, this same format can also be useful in the area of traditional SIP-based telephony.*
 
 ##1 Motivation behind proposing the SALSA format
 
@@ -15,7 +15,7 @@ Network traces can be collected with tools like Wireshark and saved in such file
 
 Some of the modern communication libraries and frameworks do provide embedded logging capabilities so that they can capture the details of signaling packets being exchanged by the applications. But those packet details are often mixed with some general debug or information printouts. And those logs are in different custom, incompatible formats. Thus, universally handling them in third-party applications is problematic.
 
-With that — and with some other practical needs — in mind, the Simple Application-Level Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at being easy to create, easy to annotate, easy to parse and process the captured signaling packet data. Using it, developers and companies can quickly create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client- and server-side communication applications.
+With that — and with some other practical needs — in mind, the Simple Application-Level-Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at being easy to create, easy to annotate, easy to parse and process the captured signaling packet data. Using it, developers and companies can quickly create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client- and server-side communication applications.
 
 ###1.1 Why not HAR?
 
@@ -41,7 +41,7 @@ The SALSA format is based on JSON, as described in RFC 4627.
 
 ###4.1 Encoding
 
-An SALSA file is REQUIRED to be saved in UTF-8 encoding. Other encodings are forbidden. A reader MUST ignore a byte-order mark if it exists in the file, and a writer MAY emit a byte-order mark in the file.
+A SALSA file is REQUIRED to be saved in UTF-8 encoding. Other encodings are forbidden. A reader MUST ignore a byte-order mark if it exists in the file, and a writer MAY emit a byte-order mark in the file.
 
 ###4.2 List of objects
 
@@ -61,7 +61,7 @@ This object represents the root of the exported data. This object MUST be presen
 
 For a specific SALSA-formatted file, the "startedDateTime" string value MUST represent the moment when the application that captured packets represented in this file was ready to capture them. The individual "time" values of "packet" objects, in the "packets" array, MUST be calculated relative to this time moment. The SALSA creator application SHOULD provide the "startedDateTime" whenever this information is available to it. In case if the SALSA creator application cannot get the absolute timing for the moment when capturing signaling packets was started, or when there is a specific reason to not provide (disclose) that information to the SALSA format consumers, it still MUST properly calculate the "time" values of "packet" objects relative to that initial moment. In the case when the SALSA creator application cannot even get the information about the moment when capturing packets was actually started, it SHOULD assume that the capturing was started at the moment of dumping the first (the earliest) packet represented in the "packets" array, thus its "time" value becomes zero and the "time" values of all later packets represnted in the "packets" array are relative to this moment.
 
-The "startedDateTime" string value MUST be formatted in accordance with the ISO 8601 format for combined date and time in a specific timezone, and include seconds and, at least, thousandth fractions of a second to support the millisecond precision. Thus, the format is like "YYYY-MM-DDThh:mm:ss.sssTZD". For example, "2013-10-22T17:18:30.457+03:00". When a sub-millisecond precision is supported, the application may use a longer fractional part for the seconds unit in the format. A conversion between the string format given and the absolute internal clock timing on a particular system is expected to be quite straightforward and easy to implement, either with a readity available system library or an external library that is capable of handling date and timing formats according to ISO 8601, or with a simple regular expression (or a similar mechanism) to parse the string and the string formattng mechanisms available.
+The "startedDateTime" string value MUST be formatted in accordance with the ISO 8601 format for combined date and time in a specific timezone, and include seconds and, at least, thousandth fractions of a second to support the millisecond precision. Thus, the format is "YYYY-MM-DDThh:mm:ss.sssTZD". For example, "2013-10-22T17:18:30.457+03:00". When a sub-millisecond precision is supported, the application may use a longer fractional part for the seconds unit in the format. A conversion between the string format given and the absolute internal clock timing on a particular system is expected to be quite straightforward and easy to implement, either with a readity available system library or an external library that is capable of handling date and timing formats according to ISO 8601, or with a simple regular expression (or a similar mechanism) to parse the string and the string formattng mechanisms available.
 
 For the sake of compatibility, all string values for "protocol" and "transport" are given in lower case. Using standard protocol names (or the commonly established protocol names, if they are non-standard yet) is REQUIRED. For example, "sip", "xmpp", "json", "http", "sdp", etc.
 
