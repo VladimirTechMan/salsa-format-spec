@@ -1,9 +1,9 @@
 {
   "salsa": {
-    "version": "0.2",
+    "version": "0.3",
     "creator": {
       "name": "TShark exporter to Simple Application-Level Signaling Archive (SALSA) format",
-      "version": "0.1"
+      "version": "0.2"
     },
     "startedDateTime": "2005-01-14T11:58:02.965",
     "packets": [
@@ -21,6 +21,7 @@
           "ipaddr": "200.57.7.204",
           "port": 5061
         },
+        "format": "plain-text-lines",
         "body": [
           "INVITE sip:francisco@bestel.com:55060 SIP/2.0",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
@@ -60,6 +61,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 100 Trying",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
@@ -88,6 +90,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 180 Ringing",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
@@ -116,6 +119,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "REGISTER sip:Verso.com SIP/2.0",
           "Via: SIP/2.0/UDP 200.57.7.205:5061;rport;branch=z9hG4bKDC8595CD770E4317ACBC3B64CF5016C5",
@@ -145,6 +149,7 @@
           "ipaddr": "200.57.7.205",
           "port": 5061
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 200 OK",
           "Via: SIP/2.0/UDP 200.57.7.205:5061;received=200.57.7.205;rport=5061;branch=z9hG4bKDC8595CD770E4317ACBC3B64CF5016C5",
@@ -175,6 +180,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 200 Ok",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bKff9b46fb055c0521cc24024da96cd290",
@@ -217,6 +223,7 @@
           "ipaddr": "200.57.7.204",
           "port": 5061
         },
+        "format": "plain-text-lines",
         "body": [
           "ACK sip:francisco@200.57.7.204:5061 SIP/2.0",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK0f496e3b6e7bd140e0b701071c1245ab",
@@ -244,6 +251,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "REGISTER sip:bestel.com SIP/2.0",
           "Via: SIP/2.0/UDP 200.57.7.204:5061;rport;branch=z9hG4bK4E76DAE7C5584B21BF8C5F687296CCA5",
@@ -273,6 +281,7 @@
           "ipaddr": "200.57.7.204",
           "port": 5061
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 200 OK",
           "Via: SIP/2.0/UDP 200.57.7.204:5061;received=200.57.7.204;rport=5061;branch=z9hG4bK4E76DAE7C5584B21BF8C5F687296CCA5",
@@ -303,6 +312,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "REGISTER sip:Verso.com SIP/2.0",
           "Via: SIP/2.0/UDP 200.57.7.205:5061;rport;branch=z9hG4bK360869027AEF4FB8ADE56EC7A775CACD",
@@ -332,6 +342,7 @@
           "ipaddr": "200.57.7.205",
           "port": 5061
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 200 OK",
           "Via: SIP/2.0/UDP 200.57.7.205:5061;received=200.57.7.205;rport=5061;branch=z9hG4bK360869027AEF4FB8ADE56EC7A775CACD",
@@ -362,6 +373,7 @@
           "ipaddr": "200.57.7.204",
           "port": 5061
         },
+        "format": "plain-text-lines",
         "body": [
           "INVITE sip:francisco@bestel.com:55060 SIP/2.0",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK9a86043a5daf59f4e9afd83eff9fc6e8",
@@ -400,6 +412,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 100 Trying",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK9a86043a5daf59f4e9afd83eff9fc6e8",
@@ -428,6 +441,7 @@
           "ipaddr": "200.57.7.195",
           "port": 5060
         },
+        "format": "plain-text-lines",
         "body": [
           "SIP/2.0 180 Ringing",
           "Via: SIP/2.0/UDP 200.57.7.195;branch=z9hG4bK9a86043a5daf59f4e9afd83eff9fc6e8",
