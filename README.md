@@ -1,4 +1,4 @@
-SALSA Format 0.3 Specification
+SALSA Format 0.4 Specification
 ==============================
 
 Author: Vladimir "VladimirTechMan" Beloborodov, \<VladimirTechMan@gmail.com\>
@@ -96,8 +96,8 @@ The "packets" object represents an ordered sequence of the captured signaling pa
  "transport" | string  | Optional. The name of the transport being used to transmit the packet.
  "src"       | object  | Required. The identification details of the source (sender) of the packet.
  "dst"       | object  | Required. The identification details of the destination (receiver) of the packet.
- "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" is assumed.
- "body"      | *depending on format specified* | Required. The actual data of captured signaling packet, represented according to the specified "format".
+ "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" MUST be assumed.
+ "body"      | *depending on "format" specified* | Required. The actual data of captured signaling packet, represented according to the specified "format".
  "comment"   | string  | Optional. A comment provided by the user or the application about the packet itself or about the part of interaction between source and destination that the packet is used for.
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
@@ -118,11 +118,11 @@ The SALSA creator application SHOULD specify a "protocol" value for each "packet
 
 The SALSA creator application SHOULD specify a "transport" value for each "packet" object, unless it has specified the "transport" value in the "salsa" object (which means that all the packets are transmitted over the same transport mechanism). When the "transport" value in the "salsa" object is specified, the creator application SHOULD NOT specify the "transport" value for each packet.
 
-The "format" string is optional. In this version of SALSA, two values are officially specified: "plain-text" and "plain-text-lines". When the "format" string value is not specified for a "packet" object, the "plain-text" value is assume by default.
+The "format" string is optional. In this version of SALSA, two values are officially specified: "plain-text" and "plain-text-multipart". When the "format" string value is not specified for a "packet" object, the "plain-text" value MUST be assumed by default.
 
 When the "format" parameter value is "plain-text": The "body" value of a "packet" object MUST be a string. The string representation contains the actual signaling packet data (text data) being sent and received (over the transport mechanism specified, if any).
 
-When the "format" parameter value is "plain-text-lines": The "body" value of a "packet" object MUST be an array of strings. In this case the actual packet is a concatenation of those strings, in the given order, where a CRLF pair (which is equal to the "\r\n" JSON-formatted string) is added at the end of each string in the array, including the last string. The "plain-text-lines" format allows to represent signaling packets of many modern signaling protocols, like SIP or XMPP, in a way that can be easier for a human to read and analyze.
+When the "format" parameter value is "plain-text-multipart": The "body" value of a "packet" object MUST be an array of strings. In this case the actual packet is a concatenation of all the strings in the array, in the given order. The "plain-text-multipart" format allows to represent signaling packets of many modern text-based signaling protocols, like SIP, XMPP or JSON, in a more structured manner that can be easier for a human to read and analyze directly from the file (using a plain text editor or alike). For a more compact representation, simply use the "plain-text" format option.
 
 ####4.2.4 src and dst
 
