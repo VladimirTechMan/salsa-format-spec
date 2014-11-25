@@ -17,6 +17,8 @@ Some of the modern communication libraries and frameworks do provide embedded lo
 
 With that — and with some other practical needs — in mind, the Simple Application-Level-Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at being easy to create, easy to annotate, easy to parse and process the captured signaling packet data. Using it, developers and companies can quickly create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client- and server-side communication applications.
 
+The SALSA format is agnostic to the types of the signaling protocols that it contains. It may be used to archive call/session signaling, media signaling, signaling payloads used for monitoring or control of remote objects, and alike — an the format can contain multiple types of signaling protocols at once.
+
 ###1.1 Why not HAR?
 
 The HTTP Archive (HAR) format is, indeed, somewhat similar to SALSA. Actually, SALSA was greatly inspired by HAR. But HAR was created largely with the HTTP specifics in mind. And it is tailored for HTTP, and not so much towards capturing and handling traces of arbitrary text-based signaling protocols used by VoIP and web-applications. This is why SALSA is proposed. (As a quick note: It is very easy to combine the "log" root entry of the HAR format and the "salsa" root entry of the SALSA format inside one parent JSON object, shall that be practically useful.)
@@ -53,7 +55,7 @@ This object represents the root of the exported data. This object MUST be presen
  ------------|---------|------------
  "version"   | string  | Required. Version number of the SALSA format used for the given file.
  "creator"   | object  | Optional. An object of type creator that contains the information of the application that created this SALSA file.
- "startedDateTime" | string | Optional. The timestamp for the moment when the packet capturing activity actually started.
+ "startedDateTime" | string | Optional. The timestamp for the moment when the packet capturing activity actually started. Formatted according to a subset of ISO 8601 formats (see details below).
  "comment"   | string  | Optional. A comment provided by the user or the application.
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
@@ -120,7 +122,7 @@ The SALSA creator application SHOULD specify a "transport" value for each "packe
 
 The "format" string is optional. In this version of SALSA, two values are officially specified: "plain-text" and "plain-text-multipart". When the "format" string value is not specified for a "packet" object, the "plain-text" value MUST be assumed by default.
 
-When the "format" parameter value is "plain-text": The "body" value of a "packet" object MUST be a string. The string representation contains the actual signaling packet data (text data) being sent and received (over the transport mechanism specified, if any).
+When the "format" parameter value is "plain-text": The "body" value of a "packet" object MUST be a string. The string representation contains the actual signaling packet data (text data) being sent and received (over the transport mechanism specified with the "transport" string value, if provided).
 
 When the "format" parameter value is "plain-text-multipart": The "body" value of a "packet" object MUST be an array of strings. In this case the actual packet is a concatenation of all the strings in the array, in the given order. The "plain-text-multipart" format allows to represent signaling packets of many modern text-based signaling protocols, like SIP, XMPP or JSON, in a more structured manner that can be easier for a human to read and analyze directly from the file (using a plain text editor or alike). For a more compact representation, simply use the "plain-text" format option.
 
