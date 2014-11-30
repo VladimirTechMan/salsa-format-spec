@@ -56,6 +56,7 @@ This object represents the root of the exported data. This object MUST be presen
  "version"   | string  | Required. Version number of the SALSA format used for the given file.
  "creator"   | object  | Optional. An object of type creator that contains the information of the application that created this SALSA file.
  "startedDateTime" | string | Optional. The timestamp for the moment when the packet capturing activity actually started. Formatted according to a subset of ISO 8601 formats (see details below).
+ "duration"  | string  | Optional. Total duration of the packet capturing activity, in milliseconds.
  "comment"   | string  | Optional. A comment provided by the user or the application.
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
@@ -69,7 +70,13 @@ The "startedDateTime" string value, when provided, MUST be formatted in accordan
 
 The usage of ISO 8601-compliant format, as opposed to a numeric value equal to the absolute clock time on the system, is intentional in SALSA: It allows for more compatibility between different systems when doing some calendar calculations, even basic ones. (The absolute time values on a system are normally relative to some predefined epoch and different systems may have different epoch "starting points". Thus, a more portable approach is beneficial.) Also, the possible string formats specified above are much easier to understand for a person checking a SALSA-formatted file with a plain text editor.
 
-For the sake of compatibility, all string values for "protocol" and "transport" are given in lower case. Using standard protocol names (or the commonly established protocol names, if they are non-standard yet) is REQUIRED. For example, "sip", "xmpp", "json", "http", "sdp", etc.
+The "duration" value, if added by the SALSA format creator application, MUST be equal to the total duration, in milliseconds, of the packet capturing activity (starting from the moment represented by the "startedDateTime" value). The SALSA format creator application MAY add a fractional part to this value, to provide a sub-millisecond precision, when that is possible. The value of "duration" MUST be a string representation of the actual duration numeric value and it MUST only contain digits and (optionally) one dot character (.) to delimit the integer part and the fractional part of the numeric value. (For the explanation on using the string type versus the number type, to represent relative timing values in SALSA, please, refer to section 4.2.3, to the part discussing the "time" value of the "packet" object.)
+
+The numeric equivalent of the "duration" string value MUST be equal to or greater than the numeric equvivalent of the "time" string value of the last "packet" object in the "packets" array.
+
+Providing the "duration" value is RECOMMENDED in the cases where the packet capturing activity did not immediately finish at the moment when the last packet (represented in the "packets" array) was captured and the fact that there was no other signaling packets between that last captured packet and the actual end of the packet capturing activity can be useful, as an extra fact, to the future consumers of the packet archive file.
+
+For the sake of compatibility, all string values for "protocol" and "transport" MUST be in lower case. Using standard protocol names (or the commonly established protocol names, if they are non-standard yet) is REQUIRED. For example, "sip", "xmpp", "json", "http", "sdp", etc.
 
 For the "transport" entry, the following values are suggested in this version of the SALSA format: "udp", "tcp", "websocket", "webrtc-datachannel". Please, note that in this case the transport name is not necessarily limited to the actual transport protocol being used (as "udp" and "tcp" are, for example), but may also reflect the actual mechanism being used to exchange the signaling packets (for instance, "websocket", which is built on top of TCP, or "webrtc-datachannel", which is essentially SCTP over UDP). Going forward, more values may be added. (For example, it is not clear yet if adding "tls" and "dtls", in addition to general "tcp" and "udp" transports, would be beneficial for practical purposes of SALSA.)
 
