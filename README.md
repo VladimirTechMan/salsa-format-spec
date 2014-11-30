@@ -55,7 +55,7 @@ This object represents the root of the exported data. This object MUST be presen
  ------------|---------|------------
  "version"   | string  | Required. Version number of the SALSA format used for the given file.
  "creator"   | object  | Optional. An object of type creator that contains the information of the application that created this SALSA file.
- "startedDateTime" | string | Optional. The timestamp for the moment when the packet capturing activity actually started. Formatted according to a subset of ISO 8601 formats (see details below).
+ "startedDateTime" | string | Optional. The timestamp for the moment when the packet capturing activity actually started. Formatted according to a subset of valid formats from ISO 8601 (*see details below*).
  "duration"  | string  | Optional. Total duration of the packet capturing activity, in milliseconds.
  "comment"   | string  | Optional. A comment provided by the user or the application.
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
