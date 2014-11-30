@@ -1,7 +1,9 @@
 SALSA Format 0.5 Specification
 ==============================
 
-Author: Vladimir "VladimirTechMan" Beloborodov, \<VladimirTechMan@gmail.com\>
+**Author: Vladimir "*VladimirTechMan*" Beloborodov**, \<VladimirTechMan@gmail.com\>
+
+##*Abstract*
 
 *This document is a description of Simple Application-Level-Signaling Archive (SALSA) format that can be used to easily capture, annotate, exchange and process packet flows of different text-based signaling protocols that are used in modern web or VoIP applications. The need in such a format was largely inspired by the proliferation of WebRTC-based solutions. Yet, it is not limited to WebRTC by any means. For example, this same format can also be useful in the area of traditional SIP-based telephony.*
 
