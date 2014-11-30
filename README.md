@@ -72,7 +72,7 @@ The usage of ISO 8601-compliant format, as opposed to a numeric value equal to t
 
 The "duration" value, if added by the SALSA format creator application, MUST be equal to the total duration, in milliseconds, of the packet capturing activity (starting from the moment represented by the "startedDateTime" value). The SALSA format creator application MAY add a fractional part to this value, to provide a sub-millisecond precision, when that is possible. The value of "duration" MUST be a string representation of the actual duration numeric value and it MUST only contain digits and (optionally) one dot character (.) to delimit the integer part and the fractional part of the numeric value. (For the explanation on using the string type versus the number type, to represent relative timing values in SALSA, please, refer to section 4.2.3, to the part discussing the "time" value of the "packet" object.)
 
-The numeric equivalent of the "duration" string value MUST be equal to or greater than the numeric equvivalent of the "time" string value of the last "packet" object in the "packets" array.
+The numeric equivalent of the "duration" string value MUST be equal to or greater than the numeric equivalent of the "time" string value of the last "packet" object in the "packets" array.
 
 Providing the "duration" value is RECOMMENDED in the cases where the packet capturing activity did not immediately finish at the moment when the last packet (represented in the "packets" array) was captured and the fact that there was no other signaling packets between that last captured packet and the actual end of the packet capturing activity can be useful, as an extra fact, to the future consumers of the packet archive file.
 
