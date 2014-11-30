@@ -74,7 +74,7 @@ The "duration" value, if added by the SALSA format creator application, MUST be 
 
 The numeric equivalent of the "duration" string value MUST be equal to or greater than the numeric equivalent of the "time" string value of the last "packet" object in the "packets" array.
 
-Providing the "duration" value is RECOMMENDED in the cases where the packet capturing activity did not immediately finish at the moment when the last packet (represented in the "packets" array) was captured and the fact that there was no other signaling packets between that last captured packet and the actual end of the packet capturing activity can be useful, as an extra fact, to the future consumers of the packet archive file.
+Providing the "duration" value is RECOMMENDED in the cases where the packet capturing activity did not immediately finish at the moment when the last packet (represented in the "packets" array) was captured and the fact that there was no other signaling packets between that last captured packet and the actual end of the packet capturing activity can be useful, as an extra piece of information, to the future consumers of the packet archive file.
 
 For the sake of compatibility, all string values for "protocol" and "transport" MUST be in lower case. Using standard protocol names (or the commonly established protocol names, if they are non-standard yet) is REQUIRED. For example, "sip", "xmpp", "json", "http", "sdp", etc.
 
