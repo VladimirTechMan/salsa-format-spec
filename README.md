@@ -95,7 +95,7 @@ The "packets" object represents an ordered sequence of the captured signaling pa
  ------------|---------|------------
  "time"      | string  | Required. Packet capture time, in milliseconds, relative to the moment when the capturing activity was started. The value is formatted as a string. A fractional part for sub-millisecond precision is allowed.
  "protocol"  | string  | Optional. The name of the signaling protocol of the packet.
- "transport" | string  | Optional. The name of the transport being used to transmit the packet.
+ "transport" | string  | Optional. The name of the transport that was used to transmit the packet.
  "src"       | object  | Required. The identification details of the source (sender) of the packet.
  "dst"       | object  | Required. The identification details of the destination (receiver) of the packet.
  "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" MUST be assumed.
