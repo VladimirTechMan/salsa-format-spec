@@ -11,7 +11,7 @@ Network traces can be collected with tools like Wireshark and saved in such file
 
 * Existing libraries (especially open-source ones) that are intended to read PCAP and similar file formats often fail to correctly handle the TCP message framing and cannot properly re-assemble the application-level signaling protocol packets.
 * The traffic coming between the endpoints is typically encrypted these days. Thus, trying to capture details somewhere outside the actual applications that send and receive data will often not allow to look at the actual signaling packets being exchanged over such an encrypted channel.
-* In the endpoint applications: Capturing in real PCAP or similar packet capture formats may be not possible and usually is not feasible. That is even more applicable to web browsers and web applications, as well as to mobile applications.
+* In the endpoint applications: Capturing into real PCAP or similar packet capture formats may be not possible and usually is not feasible. That is even more applicable to web browsers and web applications, as well as to mobile applications.
 
 Some of the modern communication libraries and frameworks do provide embedded logging capabilities so that they can capture the details of signaling packets being exchanged by the applications. But those packet details are often mixed with some general debug or information printouts. And those logs are in different custom, incompatible formats. Thus, universally handling them in third-party applications is problematic.
 
