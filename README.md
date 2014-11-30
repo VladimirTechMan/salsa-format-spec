@@ -186,7 +186,7 @@ It is also worth noting that some of the existing specialized signaling protocol
 
 When a SALSA file consumer cannot identify even the basic signaling protocol (format) for an archived packet, it MAY skip the packet. In this case it SHOULD provide an indication or a notification to the end user(s) on the failed attempt to handle that packet. It MAY also ask the user if processing this SALSA file need to be continued. Depending on its funcational scope, the SALSA file consumer MAY also try to provide a reasonable high-level handling of a packet for an unknown protocol name (for instance, based on its source and destination details) — again, as an example, consider a call-flow visualization tool: It can just draw an approprite call flow arrow between the source and destination on the diagram and annotate it for the end user with the given protocol name.
 
-Finally, as more tools get support of the SALSA format in them, they may offer a modular approach, where the companies or communities behind certain custom signaling protocols will also be able to supply add-ons or extension modules that will enable the tools to recognize and handle those custom protocols in details.
+Finally, as more tools get support of the SALSA format in them, some of them may offer a more modular approach, where the companies or communities behind certain custom signaling protocols will be able to supply 3rd-party add-ons or extension modules that will enable the tools to recognize and handle those custom protocols in details.
 
 ##5 Versioning Scheme
 
