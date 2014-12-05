@@ -188,7 +188,7 @@ In the case where several specific ports on the same IP address are consistently
 
 When no better naming is possible, the SALSA file creator SHOULD use a name representing the combination of the "ipaddr" and "port" values, with appropriate formatting. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6. That approach allows SALSA file consumers to provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive one. 
 
-###4.3 Protocol naming for better compatibility
+###4.3 Specifying protocol names in SALSA
 
 The string values for the "protocol" entry, as specified in sections 4.2.1 and 4.2.3 (for the "salsa" and "packet" objects), MUST all be in the lower case.
 
