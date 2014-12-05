@@ -129,6 +129,8 @@ The "packets" array represents a time-ordered sequence of the logged signaling p
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
 
+####*4.2.3.1 "time"*
+
 The "time" value in a "packet" object MUST be calculated relative to the moment when the logging activity was started. That way, when the SALSA file creator provides the "startedDateTime" value in the "salsa" object, the SALSA file consumers can easily calculate the absolute timestamps of individual packets, if required. On the other hand, even if the "startedDateTime" value was not provided in the file (for example, because it was not available from the original packet capture format being converted to the SALSA format), the relative values will still be available and will give the information necessary to analyze relative timing characteristics.
 
 For the sake of efficiency, any SALSA file creator that is also a packet logger MAY opt for initially collecting only the absolute timestamps based, for example, on the internal system clock, both for the moment when the packet logging activity starts and for each subsequent moment when a packet is logged. When the packet logging activity has finished, the SALSA file creator converts the collected absolute timing values of individual packets into the corresponding relative timing values, as per the requirements above. And it converts the absolute timestamp of the starting moment of logging activity into the ISO 8601-compliant formatted string representation, as described in section 4.2.1. This two-step approach can help to reduce the impact of the capturing activity on the expected real-time characteristics of the packet logger and other parts of the application. (In the case when a SALSA file creator is just converting an existing packet capture file into the SALSA format, such a two-phase approach is not required, typically.)
@@ -141,11 +143,15 @@ The SALSA format uses a string representation of timestamps, rather than the num
 * It allows for better control over the formatting of the timestamps with a sub-millisecond precision (that is, with a fractional part in them): Some of the available libraries that read and write the JSON format tend to support only a fixed (and non-configurable) maximum number of digits in a fractional part, which may be insufficient for parsing or saving the timestamps in SALSA file creators or consumers based on those libraries.
 * It allows for more flexibility in dealing with longer integer and floating-point numeric values on the architectures and in some (typically, older) programming languages where the basic numeric type(s) do not provide a sufficient value range to hold such numeric values in them without a representation error.
 
+####*4.2.3.2 "transport" and "protocol"*
+
 The SALSA file creator SHOULD specify a "protocol" value for each "packet" object, unless it has specified the "protocol" value in the "salsa" object (which signals that all the packets represent the same protocol). When the "protocol" value in the "salsa" object is specified, the SALSA file creator SHOULD NOT specify the "protocol" value for each packet.
 
 For specific requirements on naming the "protocol" entries, please, refer to section 4.3.
 
 The SALSA file creator SHOULD specify a "transport" value for each "packet" object, unless it has specified the "transport" value in the "salsa" object (which signals that all the packets are transmitted over the same transport mechanism). When the "transport" value in the "salsa" object is specified, the SALSA file creator SHOULD NOT specify the "transport" value for each packet.
+
+####*4.2.3.3 "format" and "body"*
 
 The "format" string is optional. In this version of SALSA, three values are officially specified: "plain-text", "plain-text-multipart" and "base64". When the "format" string value is not specified for a "packet" object, the "plain-text" value MUST be assumed by default.
 
