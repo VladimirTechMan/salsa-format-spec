@@ -161,10 +161,12 @@ When the "format" parameter value is "plain-text-multipart": The "body" value of
 
 When the "format" parameter value is "base64": The "body" value of a "packet" object MUST be a string. In this case, the string representation contains the actual signaling packet data encoded using the base64 encoding, as described in RFC 4648. All SALSA file creators and consumers MUST comply with the requirements of RFC 4648 when encoding and decoding signaling packet bodies for the "base64" format option.
 
-When archiving packets of a specific signaling protocol, the usage of described format options is as follows:
+When representing packets of a specific signaling protocol, the usage of the described format options is as follows:
 * When the signaling protocol is known to the SALSA file creator and it is a text-based signaling protocol that mandates the usage of the UTF-8 encoding, the SALSA file creator MUST use one of the following "format" value options: "plain-text" or "plain-text-multipart".
 * When the signaling protocol is known to the SALSA file creator and it is a text-based signaling protocol that allows using both the UTF-8-compliant encodings and text encodings non-compliant with UTF-8. Then the SALSA file creator MAY identify the actual text encoding of the packet under consideration (for example, based on a parameter or attribute in the packet format that explicitly specifies the text encoding used in that packet). The SALSA file creator MUST use the "plain-text" or "plain-text-multipart" format options for all encodings compliant with UTF-8. For all other encodings, the SALSA file creator MUST use the "base64" format option. When the SALSA file creator is not able to identify the actual text encoding of the packet, or the packet specifies a text encoding name that is not known to the SALSA file creator, or identifying the text encoding of the packet would notably affect the expected performance characteristics of the application, the SALSA file creator MUST use the "base64" format option.
 * In all other cases, the SALSA file creator MUST use the "base64" format option.
+
+When using the "plain-text" or "plain-text-multipart" format options, the SALSA file creator MUST ensure that all the string values representing packet bodies are valid in terms of the UTF-8 encoding scheme. Where the SALSA file creator is a part of the appliation, or it uses other modules or components, that already do this check (for example, when the application is the actual source or the final destination of the packets being logged), the SALSA file creator MAY rely on those known checks as a matter of validating the strings representing packet bodies.
 
 ####4.2.4 src and dst
 
