@@ -72,6 +72,8 @@ This object represents the root of the exported data. This object MUST be presen
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
  "packets"   | array   | Required. An array of objects of type packet, where each object represents a logged signaling protocol packet.
 
+####*4.2.1.1 "startedDateTime"*
+
 A SALSA file creator SHOULD provide the "startedDateTime" value. For a specific SALSA-formatted file, the "startedDateTime" string value MUST represent the moment when the packet logging activity started. (Note that in the case of converting existing packet capture files to the SALSA format, the timestamps MUST be for when the packets in those source files where logged, not for the time frame when the conversion was performed itself.) In the simplest case, that moment is equal to when the first packet was actually logged by the application. But it may also be earlier on the timeline, for example, if the application was waiting for some time before it actually received and logged the first signaling packet.
 
 When the "startedDateTime" value is provided in the file, all the individual "time" values of "packet" objects, in the "packets" array, MUST be relative to that "startedDateTime" value. When the "startedDateTime" value cannot be known, the SALSA file creator MAY still provide the "time" values for "packet" objects relative to the moment when the packet logging was actually started (for example, when converting to the SALSA format from an existing capture file in a format that provides that relative timing information in it, but not the absolute start time of the logging activity). If the SALSA file creator has no possibility to determine the time stamps of individual packets relative to the moment when the logging activity was started, then it MUST assume that moment to be equal to the moment when the first packet was actually logged (and, thus, the "time" value of that first packet object in the "packets" array will be zero).
@@ -80,11 +82,17 @@ The "startedDateTime" string value, when provided, MUST be formatted in accordan
 
 The usage of ISO 8601-compliant format, as opposed to a numeric value equal to the absolute clock time on the system, is intentional in SALSA: It allows for more compatibility between different systems when doing some calendar calculations, even basic ones. (The absolute time values on a system are normally relative to some predefined epoch and different systems may have different epoch "starting points". Thus, a more portable approach is beneficial.) Also, the possible string formats specified above are much easier to understand for a person checking a SALSA-formatted file with a plain text editor.
 
+Please, note that a global time point can be correctly represented using any of the available time zone offsets. For example, many platforms allow to easily get an ISO-formatted time value, compliant with the above requirements, that is adjusted to UTC (that is, it has a zero time zone offset). Thus, the SALSA file consumer SHOULD NOT rely on the time offset information itself to judge about the geographical location (an area or region) where the packet logger performed its logging activity.
+
+####*4.2.1.2 "duration"*
+
 The "duration" value, if added by the SALSA format creator, MUST be equal to the total duration, in milliseconds, of the packet logging activity (starting from the moment represented by the "startedDateTime" value). The SALSA format creator MAY add a fractional part to this value, to provide a sub-millisecond precision, when that is possible. The value of "duration" MUST be a string representation of the actual duration numeric value and it MUST only contain digits and (optionally) one dot character (.) to delimit the integer part and the fractional part of the numeric value. (For the explanation on utilizing the JSON string type versus the number type, to represent relative timing values in SALSA, please, refer to section 4.2.3, to the part discussing the "time" value of the "packet" object.)
 
 The numeric equivalent of the "duration" string value MUST be equal to or greater than the numeric equivalent of the "time" string value of the last "packet" object in the "packets" array.
 
 Providing the "duration" value is RECOMMENDED in the cases where the packet logging activity did not immediately finish at the moment when the last packet (represented in the "packets" array) was logged and the fact that there was no other signaling packets between that last logged packet and the actual end of the packet logging activity can be useful, as an extra piece of information, to the SALSA file consumers.
+
+####*4.2.1.3 "transport" and "protocol"*
 
 For the sake of compatibility, all string values for "protocol" and "transport" MUST be in the lower case. For specific requirements on naming the "protocol" entries, please, refer to section 4.3.
 
@@ -147,9 +155,10 @@ When the "format" parameter value is "plain-text-multipart": The "body" value of
 
 When the "format" parameter value is "base64": The "body" value of a "packet" object MUST be a string. In this case, the string representation contains the actual signaling packet data encoded using the base64 encoding, as described in RFC 4648. All SALSA file creators and consumers MUST comply with the requirements of RFC 4648 when encoding and decoding signaling packet bodies for the "base64" format option.
 
-The "base64" format option MUST be used by SALSA file creators to archive any binary (non-textual) signaling protocols.
-
-In the case of a non-UTF-8 compliant text encoding being used in a logged signaling protocol packet, the SALSA file creator MAY opt for properly converting that original text into the UTF-8 encoding if the SALSA file creator knows or can determine the exact original text encoding of the packet and it knows how to properly map that original encoding into the UTF-8 encoding. After a successful conversion to UTF-8, the SALSA file creator MUST use the "plain-text" or "plain-text-multipart" format. Otherwise (including the case when the conversion process fails; for example, due to some unexpected byte values or sequences being found in the original packet body), the SALSA file creator MUST use the "base64" format to represent the packet body in the file.
+When archiving packets of a specific signaling protocol, the usage of described format options is as follows:
+* When the signaling protocol is known to the SALSA file creator and it is a text-based signaling protocol that mandates the usage of the UTF-8 encoding, the SALSA file creator MUST use one of the following "format" value options: "plain-text" or "plain-text-multipart".
+* When the signaling protocol is known to the SALSA file creator and it is a text-based signaling protocol that allows using both UTF-8 encoding and other text encodings, non-compliant with UTF-8. Then the SALSA file creator MAY identify the actual text encoding of the packet under consideration (for example, based on a parameter or attribute in the packet format that explicitly specifies the text encoding used in that packet). The SALSA file creator MUST use the "plain-text" or "plain-text-multiline" format options for all encodings compliant with UTF-8. For all other encodings, the SALSA file creator MUST use the "base64" format option. When the SALSA file creator is not able to identify the actual text encoding of the packet, or the packet specifies a text encoding name that is not known to the SALSA file creator, or identifying the text encoding of the packet would notably affect the expected performance characteristics of the application, the SALSA file creator MUST use the "base64" format option.
+* In all other cases, the SALSA file creator MUST use the "base64" format option.
 
 ####4.2.4 src and dst
 
