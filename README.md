@@ -218,6 +218,8 @@ Finally, as more tools get support of the SALSA format in them, some of them may
 
 ##5 Versioning Scheme
 
+*The following versioning scheme will be applied when the format reaches version 1.0. Prior to that, as some major design aspects of the format are in development yet, there is a chance that backward-incompatible changes will be required, to ensure that version 1.0 is all good and practical.*
+
 The spec number has following syntax:  
 \<major-version-number\>.\<minor-version-number\>
 
