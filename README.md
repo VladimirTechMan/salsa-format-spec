@@ -47,6 +47,8 @@ Conformance requirements phrased as algorithms or specific steps may be implemen
 
 * __UTC.__ Coordinated Universal Time as maintained by the Bureau International des Poids et Mesures (BIPM).
 
+* The construction "SALSA file" is used throughout this document in the sense "a file properly created and formatted according to the SALSA specification".
+
 ##4 The SALSA format
 
 The SALSA format is based on JSON, as described in RFC 4627.
@@ -189,9 +191,9 @@ The "src" object identifies the source (sender) of signaling protocol packet. Th
  "ipaddr"  | string  | Optional. The IP address of the signaling packet sender or receiver.
  "port"    | number  | Optional. The TCP/UDP/SCTP port of the signaling packet sender or receiver.
 
-The "name" string value is an arbitrary symbolic name, encoded in UTF-8, and it MUST be present inside each "src" and "dst" object. It uniquely idenitifies each source and desitnation peer referenced in a SALSA file. It MAY also serve the purpose of better documenting/annotating the source and destination peers referenced in SALSA files by using a logical naming scheme that is clear and easier to understand to the people using the file.
+The "name" string value is an arbitrary symbolic name, encoded in UTF-8, and it MUST be present inside each "src" and "dst" object. It uniquely idenitifies each source and desitnation peer referenced in a SALSA file. It MAY also serve the purpose of better documenting/annotating the source and destination peers referenced in a SALSA file by using a logical naming scheme that is clear and easier to understand to the people using the file.
 
-The same unique "name" value MUST consistently be used to reference the same sender or the same receiver multiple times in a SALSA file. Different senders and receivers (for example, those having different IP addresses or different ports on the same IP address) SHOULD get different names when they are represented in a SALSA file. That approach allows SALSA file consumers to provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive (unique) one.
+The same unique "name" value MUST consistently be used to reference the same sender or the same receiver multiple times in a SALSA file. Different senders and receivers (for example, those having different IP addresses or different ports on the same IP address) MUST get different names when they are represented in a SALSA file. Note that the users of SALSA file MAY provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive (unique) one.
 
 It is RECOMMENDED that the "ipaddr" and "port" values are provided in the SALSA file whenever the SALSA file creator has, or can easily obtain, those two values, respectively.
 
