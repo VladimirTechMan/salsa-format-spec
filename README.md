@@ -188,16 +188,16 @@ The "src" object identifies the source (sender) of signaling protocol packet. Th
   JSON Name|JSON Type| Description
  ----------|---------|------------
  "name"    | string  | Required. The symbolic name of the signaling packet sender (for the "src" object) or receiver (for the "dst" object).
- "ipaddr"  | string  | Optional. The IP address of the signaling packet sender or receiver.
- "port"    | number  | Optional. The TCP/UDP/SCTP port of the signaling packet sender or receiver.
+ "ipaddr"  | string  | Optional. The IP address, if applicable and known, of the signaling packet sender or receiver.
+ "port"    | number  | Optional. The TCP/UDP/SCTP port, if applicable and know, of the signaling packet sender or receiver.
 
 The "name" string value MUST be encoded in UTF-8, and it MUST be provided inside each "src" and "dst" object in a SALSA file. The "name" value MUST be unique for every distinct network socket used to send or receive packets archived in a given SALSA file. (For the purpose of this document, the term "network socket" is used in its generic sense, as "an endpoint of an inter-process communication flow inside a computer system or across a computer network".)
 
-In addition to being a unique identifier of distinct packet senders and receivers, the "name" value MAY also serve the purpose of better documenting/annotating the actual functions (roles) of those individual senders and receivers in a SALSA file. For example, a convenient human-readable custom naming approach can be established and consistently applied. Note that the users of SALSA file MAY change or extend those peer names (annotations) at any later point in time, by replacing any of the original (unique) names with a more descriptive one, which MUST still be unique.
+In addition to being a unique identifier of distinct packet senders and receivers, the "name" value MAY also serve the purpose of better documenting/annotating the actual functions (roles) of those individual senders and receivers. (For example, a convenient human-readable custom naming approach can be established and consistently applied.) Note that the users of a SALSA file MAY change or extend those unique names (annotations) at any later point in time, by completely replacing an existing unique name with a more descriptive one, which MUST still be unique in the updated file.
 
-When the application signaling uses an IP network, and the IP address or port are known to the SALSA file creator, or they can be determined sufficiently quickly, the SALSA file creator SHOULD provide the corresponding "ipaddr" and "port" values in the "src" and "dst" objects inside the created SALSA file. The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses. The "port" value MUST be a positive integer numeric value.
+When the captured application signaling uses an IP network, and the IP address or port are known to the SALSA file creator, or they can be determined sufficiently quickly, the SALSA file creator SHOULD provide the corresponding "ipaddr" and "port" values in the corresponding "src" and "dst" objects. The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses. The "port" value MUST be a positive integer numeric value.
 
-If the "ipaddr" and "port" values are available, and there is no better naming scheme, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6.
+If the "ipaddr" and "port" values are available, and there is no better naming scheme available, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6.
 
 ###4.3 Specifying protocol names in SALSA
 
