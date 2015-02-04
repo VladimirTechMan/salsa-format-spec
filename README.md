@@ -140,7 +140,7 @@ The "packets" array represents a time-ordered sequence of the logged signaling p
  "transport" | string  | Optional. The name of the transport that was used to transmit the packet.
  "src"       | object  | Required. The identification details of the source (sender) of the packet.
  "dst"       | object  | Required. The identification details of the destination (receiver) of the packet.
- "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" MUST be assumed.
+ "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" MUST be assumed and used.
  "body"      | *depending on "format" specified* | Required. The actual data of archived signaling packet, represented according to the specified "format".
  "comment"   | string  | Optional. A comment provided by the user or the application about the packet itself or about the part of interaction between source and destination that the packet is used for.
 
