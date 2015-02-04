@@ -187,23 +187,17 @@ The "src" object identifies the source (sender) of signaling protocol packet. Th
 
   JSON Name|JSON Type| Description
  ----------|---------|------------
- "name"    | string  | Required. The unique name of the signaling packet sender or receiver.
+ "name"    | string  | Required. The symbolic name of the signaling packet sender (for the "src" object) or receiver (for the "dst" object).
  "ipaddr"  | string  | Optional. The IP address of the signaling packet sender or receiver.
  "port"    | number  | Optional. The TCP/UDP/SCTP port of the signaling packet sender or receiver.
 
-The "name" string value is an arbitrary symbolic name, encoded in UTF-8, and it MUST be present inside each "src" and "dst" object. It uniquely idenitifies each source and desitnation peer referenced in a SALSA file. It MAY also serve the purpose of better documenting/annotating the source and destination peers referenced in a SALSA file by using a logical naming scheme that is clear and easier to understand to the people using the file.
+The "name" string value MUST be encoded in UTF-8, and it MUST be provided inside each "src" and "dst" object in a SALSA file. The "name" value MUST be unique for every distinct network socket used to send or receive packets archived in a given SALSA file. (For the purpose of this document, the term "network socket" is used in its generic sense, as "an endpoint of an inter-process communication flow inside a computer system or across a computer network".)
 
-The same unique "name" value MUST consistently be used to reference the same sender or the same receiver multiple times in a SALSA file. Different senders and receivers (for example, those having different IP addresses or different ports on the same IP address) MUST get different names when they are represented in a SALSA file. Note that the users of SALSA file MAY provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive (unique) one.
+In addition to being a unique identifier of distinct packet senders and receivers, the "name" value MAY also serve the purpose of better documenting/annotating the actual functions (roles) of those individual senders and receivers in a SALSA file. For example, a convenient human-readable custom naming approach can be established and consistently applied. Note that the users of SALSA file MAY change or extend those peer names (annotations) at any later point in time, by replacing any of the original (unique) names with a more descriptive one, which MUST still be unique.
 
-It is RECOMMENDED that the "ipaddr" and "port" values are provided in the SALSA file whenever the SALSA file creator has, or can easily obtain, those two values, respectively.
+When the application signaling uses an IP network, and the IP address or port are known to the SALSA file creator, or they can be determined sufficiently quickly, the SALSA file creator SHOULD provide the corresponding "ipaddr" and "port" values in the "src" and "dst" objects inside the created SALSA file. The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses. The "port" value MUST be a positive integer numeric value.
 
-The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses.
-
-The "port" number value SHOULD be provided by the SALSA file creator whenever it is aware which specific ports are used by the source (sender) and the destination (receiver) of the signaling packet. When the SALSA file creator cannot identify the actual port number for the source or for the destination, or when identifying it would require taking additional steps that would notably affect the expected responsiveness characteristics of the application, the SALSA file creator MAY opt for not providing that specific port number in the file. The "port" value MUST be a positive integer numeric value.
-
-In the case where several specific ports on the same IP address are consistently used to exchange specific types of signaling: If the SALSA file creator is not able to identify the "port" value, or it opts for not providing that information due to performance considerations, as described above, and yet the SALSA file creator is able to distinguish between the specific types of signaling or signaling usage on different ports, it is RECOMMENDED that the SALSA file creator provides and consistently applies different (meaningful) names for those different signaling channels (signaling usages) that are found at the same IP address.
-
-If the "ipaddr" and "port" values are available, and no better naming scheme is possible, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6.
+If the "ipaddr" and "port" values are available, and there is no better naming scheme, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6.
 
 ###4.3 Specifying protocol names in SALSA
 
