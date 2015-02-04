@@ -1,4 +1,4 @@
-SALSA Format 0.6 Specification
+SALSA Format 0.7 Specification
 ==============================
 
 **Author: Vladimir "*VladimirTechMan*" Beloborodov**, \<VladimirTechMan@gmail.com\>
@@ -67,6 +67,7 @@ This object represents the root of the exported data. This object MUST be presen
  "creator"   | object  | Optional. An object of type creator that contains the information about SALSA file creator.
  "startedDateTime" | string | Optional. The timestamp of the moment when the packet logging activity actually started. The value is formatted according to a subset of formats defined in ISO 8601 (*see details below*).
  "duration"  | string  | Optional. Total duration of the packet logging activity, in seconds.
+ "geolocation" | object | Optional. The geographical position where the packets were logged by packet logger. 
  "comment"   | string  | Optional. A comment provided by the user or the application.
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
@@ -82,7 +83,7 @@ The "startedDateTime" string value, when provided, MUST be formatted in accordan
 
 The usage of ISO 8601-compliant format, as opposed to a numeric value equal to the absolute clock time on the system, is intentional in SALSA: It allows for more compatibility between different systems when doing some calendar calculations, even basic ones. (The absolute time values on a system are normally relative to some predefined epoch and different systems may have different epoch "starting points". Thus, a more portable approach is beneficial.) Also, the possible string formats specified above are much easier to understand for a person checking a SALSA-formatted file with a plain text editor.
 
-Please, note that a global time point can be correctly represented using any of the available time zone offsets. For example, many platforms allow to easily get an ISO-formatted time value that is compliant with the above requirements and is adjusted to UTC (that is, it has a zero time zone offset). Thus, the SALSA file consumer SHOULD NOT use the time offset information as an evidence of the geographical location (an area or region) where the packet logger performed its logging activity.
+Please, note that a global time point can be correctly represented using any of the available time zone offsets. For example, many platforms allow to easily get an ISO-formatted time value that is compliant with the above requirements and is adjusted to UTC (that is, it has a zero time zone offset). Thus, the SALSA file consumer SHOULD NOT use the time offset information as an evidence of the geographical location (an area or region) where the packet logger performed its logging activity. Instead, when the geolocation information is available and the SALSA file creator is allowed to provide it in the file, the geographical position of the packet logger MUST always be conveyed by using the "geolocation" object.
 
 ####*4.2.1.2 "duration"*
 
@@ -112,7 +113,21 @@ This object contains information about the SALSA file creator and it contains th
  "version" | string  | Required. The version number of the SALSA file creator that produced the given SALSA file.
  "comment" | string  | Optional. A comment provided by the user or the application.
 
-####4.2.3 packets
+####4.2.3 geolocation
+
+This object contains information about the geographical position where the packets represented in the given SALSA file were originally collected by packet logger.
+
+  JSON Name  |JSON Type| Description
+ ------------|---------|------------
+ "latitude"  | number  | Required. The latitude of the position, in decimal degrees.
+ "longitude" | number  | Required. The longitude of the position, in decimal degrees.
+ "accuracy"  | number  | Required. The accuracy of position with latitude and longitude values.
+ "altitude"  | number  | Optional. The altitude of the position, in meters above the mean sea level.
+ "altitudeAccuracy" | number  | Optional. The altitude accuracy of position, in meters.
+
+All values of "accuracy" and "altitudeAccuracy" MUST be non-negative real numbers.
+
+####4.2.4 packets
 
 The "packets" array represents a time-ordered sequence of the logged signaling packets. It has the following name/value pairs:
 
@@ -129,7 +144,7 @@ The "packets" array represents a time-ordered sequence of the logged signaling p
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
 
-####*4.2.3.1 "time"*
+####*4.2.4.1 "time"*
 
 The "time" value in a "packet" object MUST be calculated relative to the moment when the logging activity was started. That way, when the SALSA file creator provides the "startedDateTime" value in the "salsa" object, the SALSA file consumers can easily calculate the absolute timestamps of individual packets, if required. On the other hand, even if the "startedDateTime" value is not provided in the file (for example, because it was not available from the original packet capture format that was converted to the SALSA format), the relative values will still be available and will give the information necessary to analyze relative timing characteristics.
 
@@ -139,7 +154,7 @@ The SALSA format uses a string representation of timestamps, rather than the num
 * It allows for better control over the formatting of the timestamps with a millisecond or sub-millisecond precision (that is, with a fractional part in them): Some of the available libraries that read and write the JSON format tend to support only a fixed (and non-configurable) maximum number of digits in a fractional part, which may be insufficient for parsing or saving the timestamps in SALSA file creators or consumers based on those libraries.
 * It allows for more flexibility in dealing with longer integer and floating-point numeric values on the architectures and in some (typically, older) programming languages where the basic numeric type(s) do not provide a sufficient value range to hold such numeric values in them without a representation error.
 
-####*4.2.3.2 "transport" and "protocol"*
+####*4.2.4.2 "transport" and "protocol"*
 
 The SALSA file creator SHOULD specify a "protocol" value for each "packet" object, unless it has specified the "protocol" value in the "salsa" object (which signals that all the packets represent the same protocol). When the "protocol" value in the "salsa" object is specified, the SALSA file creator SHOULD NOT specify the "protocol" value for each packet.
 
@@ -147,7 +162,7 @@ For specific requirements on naming the "protocol" entries, please, refer to sec
 
 The SALSA file creator SHOULD specify a "transport" value for each "packet" object, unless it has specified the "transport" value in the "salsa" object (which signals that all the packets are transmitted over the same transport mechanism). When the "transport" value in the "salsa" object is specified, the SALSA file creator SHOULD NOT specify the "transport" value for each packet.
 
-####*4.2.3.3 "format" and "body"*
+####*4.2.4.3 "format" and "body"*
 
 The "format" string is optional. In this version of SALSA, three values are officially specified: "plain-text", "plain-text-multipart" and "base64". When the "format" string value is not specified for a "packet" object, the "plain-text" value MUST be assumed by default.
 
@@ -164,25 +179,29 @@ When representing packets of a specific signaling protocol, the usage of the des
 
 When using the "plain-text" or "plain-text-multipart" format options, the SALSA file creator MUST ensure that all the string values representing packet bodies are valid in terms of the UTF-8 encoding scheme. Where the SALSA file creator is a part of the appliation, or it uses other modules or components, that already do this check (for example, when the application is the actual source or the final destination of the packets being logged), the SALSA file creator MAY rely on those known checks as a matter of validating the strings representing packet bodies.
 
-####4.2.4 src and dst
+####4.2.5 src and dst
 
 The "src" object identifies the source (sender) of signaling protocol packet. The "dst" object identifies the destination (receiver) of signaling protocol packet. They both have the same format, with the following name/value pairs:
 
   JSON Name|JSON Type| Description
  ----------|---------|------------
- "ipaddr"  | string  | Required. The IP address of the signaling packet sender or receiver.
+ "name"    | string  | Required. The unique name of the signaling packet sender or receiver.
+ "ipaddr"  | string  | Optional. The IP address of the signaling packet sender or receiver.
  "port"    | number  | Optional. The TCP/UDP/SCTP port of the signaling packet sender or receiver.
- "name"    | string  | Optional. The name of the signaling packet sender or receiver.
+
+The "name" string value is an arbitrary symbolic name, encoded in UTF-8, and it MUST be present inside each "src" and "dst" object. It uniquely idenitifies each source and desitnation peer referenced in a SALSA file. It MAY also serve the purpose of better documenting/annotating the source and destination peers referenced in SALSA files by using a logical naming scheme that is clear and easier to understand to the people using the file.
+
+The same unique "name" value MUST consistently be used to reference the same sender or the same receiver multiple times in a SALSA file. Different senders and receivers (for example, those having different IP addresses or different ports on the same IP address) SHOULD get different names when they are represented in a SALSA file. That approach allows SALSA file consumers to provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive (unique) one.
+
+It is RECOMMENDED that the "ipaddr" and "port" values are provided in the SALSA file whenever the SALSA file creator has, or can easily obtain, those two values, respectively.
 
 The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses.
 
-The "port" number value SHOULD be provided by the SALSA file creator whenever it is aware which specific ports are used by the source (sender) and the destination (receiver) of the signaling packet. When the SALSA file creator cannot identify the actual port number for the source or for the destination, or when identifying that would require taking additional steps that would notably affect the expected responsiveness characteristics of the application, the SALSA file creator MAY opt for not providing that specific port number in the file. The "port" value MUST be a positive integer numeric value.
-
-The "name" string value serves the purposes of better documenting/annotating the source and destination peers referenced in SALSA files. It maybe an arbitrary symbolic name (encoded in UTF-8). It is REQUIRED that the same name is consistently used to reference the same sender or the same receiver multiple times in the SALSA format. It is RECOMMENDED that different senders and receivers (those having different IP addresses or different ports on the same IP address) get different names when they are represented in a SALSA file.
+The "port" number value SHOULD be provided by the SALSA file creator whenever it is aware which specific ports are used by the source (sender) and the destination (receiver) of the signaling packet. When the SALSA file creator cannot identify the actual port number for the source or for the destination, or when identifying it would require taking additional steps that would notably affect the expected responsiveness characteristics of the application, the SALSA file creator MAY opt for not providing that specific port number in the file. The "port" value MUST be a positive integer numeric value.
 
 In the case where several specific ports on the same IP address are consistently used to exchange specific types of signaling: If the SALSA file creator is not able to identify the "port" value, or it opts for not providing that information due to performance considerations, as described above, and yet the SALSA file creator is able to distinguish between the specific types of signaling or signaling usage on different ports, it is RECOMMENDED that the SALSA file creator provides and consistently applies different (meaningful) names for those different signaling channels (signaling usages) that are found at the same IP address.
 
-When no better naming is possible, the SALSA file creator SHOULD use a name representing the combination of the "ipaddr" and "port" values, with appropriate formatting. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6. That approach allows SALSA file consumers to provide better naming annotations at any later point in time, by replacing any of the original (unique) names with a more descriptive one. 
+If the "ipaddr" and "port" values are available, and no better naming scheme is possible, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6.
 
 ###4.3 Specifying protocol names in SALSA
 
