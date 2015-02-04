@@ -201,7 +201,7 @@ If the "ipaddr" and "port" values are available, and there is no better naming s
 
 ###4.3 Specifying protocol names in SALSA
 
-The string values for the "protocol" entry, as specified in sections 4.2.1 and 4.2.3 (for the "salsa" and "packet" objects), MUST all be in the lower case.
+The string values for the "protocol" entry, as specified in sections 4.2.1 and 4.2.4 (for the "salsa" and "packet" objects), MUST all be in the lower case.
 
 To achieve better interoperability in handling SALSA files, the following regulations are effective:
 * When the protocol is standardized and, thus, it has an established standard protocol name, then SALSA file creators and consumers SHOULD use this name as the string value. (For example, "sip", "xmpp", "json", "http", "sdp", etc.)
