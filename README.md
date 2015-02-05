@@ -74,7 +74,7 @@ This object represents the root of the exported data. This object MUST be presen
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
  "packets"   | array   | Required. An array of objects of type "packet", where each object represents a logged signaling protocol packet.
- "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format cannot or does not (yet) support.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not (yet) support.
 
 ####*4.2.1.1 "startedDateTime"*
 
@@ -144,7 +144,7 @@ The "packets" array represents a time-ordered sequence of the logged signaling p
  "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" MUST be assumed and used.
  "body"      | *depending on "format" specified* | Required. The actual data of archived signaling packet, represented according to the specified "format".
  "comment"   | string  | Optional. A comment provided by the user or the application about the packet itself or about the part of interaction between source and destination that the packet is used for.
- "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format cannot or does not (yet) support.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not (yet) support.
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
 
@@ -192,7 +192,7 @@ The "src" object identifies the source (sender) of signaling protocol packet. Th
  "name"    | string  | Required. The symbolic name of the signaling packet sender (for the "src" object) or receiver (for the "dst" object).
  "ipaddr"  | string  | Optional. The IP address, if applicable and known, of the signaling packet sender or receiver.
  "port"    | number  | Optional. The TCP/UDP/SCTP port, if applicable and know, of the signaling packet sender or receiver.
- "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format cannot or does not (yet) support.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not (yet) support.
 
 The "name" string value MUST be encoded in UTF-8, and it MUST be provided inside each "src" and "dst" object in a SALSA file. The "name" value MUST be unique for every distinct network socket used to send or receive packets archived in a given SALSA file. (For the purpose of this document, the term "network socket" is used in its generic sense, as "an endpoint of an inter-process communication flow inside a computer system or across a computer network".)
 
