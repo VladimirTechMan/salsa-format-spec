@@ -73,7 +73,8 @@ This object represents the root of the exported data. This object MUST be presen
  "comment"   | string  | Optional. A comment provided by the user or the application.
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
- "packets"   | array   | Required. An array of objects of type packet, where each object represents a logged signaling protocol packet.
+ "packets"   | array   | Required. An array of objects of type "packet", where each object represents a logged signaling protocol packet.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format cannot or does not (yet) support.
 
 ####*4.2.1.1 "startedDateTime"*
 
@@ -131,7 +132,7 @@ All values of "accuracy" and "altitudeAccuracy" MUST be non-negative real number
 
 ####4.2.4 packets
 
-The "packets" array represents a time-ordered sequence of the logged signaling packets. It has the following name/value pairs:
+The "packets" array represents a time-ordered sequence of the logged signaling packets. The "packet" object has the following name/value pairs:
 
   JSON Name  |JSON Type| Description
  ------------|---------|------------
@@ -143,6 +144,7 @@ The "packets" array represents a time-ordered sequence of the logged signaling p
  "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" MUST be assumed and used.
  "body"      | *depending on "format" specified* | Required. The actual data of archived signaling packet, represented according to the specified "format".
  "comment"   | string  | Optional. A comment provided by the user or the application about the packet itself or about the part of interaction between source and destination that the packet is used for.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format cannot or does not (yet) support.
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
 
@@ -190,6 +192,7 @@ The "src" object identifies the source (sender) of signaling protocol packet. Th
  "name"    | string  | Required. The symbolic name of the signaling packet sender (for the "src" object) or receiver (for the "dst" object).
  "ipaddr"  | string  | Optional. The IP address, if applicable and known, of the signaling packet sender or receiver.
  "port"    | number  | Optional. The TCP/UDP/SCTP port, if applicable and know, of the signaling packet sender or receiver.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format cannot or does not (yet) support.
 
 The "name" string value MUST be encoded in UTF-8, and it MUST be provided inside each "src" and "dst" object in a SALSA file. The "name" value MUST be unique for every distinct network socket used to send or receive packets archived in a given SALSA file. (For the purpose of this document, the term "network socket" is used in its generic sense, as "an endpoint of an inter-process communication flow inside a computer system or across a computer network".)
 
@@ -198,6 +201,24 @@ In addition to being a unique identifier of distinct packet senders and receiver
 When the captured application signaling uses an IP network, and the IP address or port are known to the SALSA file creator, or they can be determined sufficiently quickly, the SALSA file creator SHOULD provide the corresponding "ipaddr" and "port" values in the corresponding "src" and "dst" objects. The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses. The "port" value MUST be a positive integer numeric value.
 
 If the "ipaddr" and "port" values are available, and there is no better naming scheme available, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6.
+
+####4.2.6 extras
+
+The "extras" array entry is optional and it MAY be added by the SALSA file creator to several other standard objects defined by the SALSA format. This notion of "extras" in SALSA exists to enable the users of the format to further customize and tailor it, to their specific needs.
+
+The "extras" array contains a set of "extra" objects, each of which contains some additional information in the scope of a given SALSA file. The actual ordering of those objects inside the array is not defined and is not important, for the purpose of the current version of SALSA spec. All the details contained inside a specific "extras" array MUST be relevant in, and related to, the scope of a higher-level JSON object that directly contains that specific "extras" array.
+
+Aside from the requirements explicitly given in this SALSA specification, including the current section, the actual contents and semantics of individual "extra" objects in an "extras" array is completely outside the scope of this document. It is the responsibility of the organiations or individuals adding their own (custom) "extra" objects to SALSA files to define or re-define, and to properly create and handle the actual format and contents of those objects. It is up to such organizations and individuals to decide if they want to provide any formal specifications of their custom "extra" object(s) to the general public. But it is advisable to do so, as that practice may help external users to get more useful details from the customized SALSA files that they receive. In addition, if some specific detail(s) start to appear in many customized SALSA used in the field, that itself may signal a need to consider and provide a corresponding generic mechanism, to express those details, in the core SALSA format specification.
+
+ Any "extra" object MUST contain the following key/value pair in it:
+
+  JSON Name|JSON Type| Description
+ ----------|---------|------------
+ "name"    | string  | Required. Provides a unique name identifier for the given "extra" object, in the reserse domain name notation.
+
+Following the general requirements to the SALSA files, any keys and values added inside a custom "extra" object MUST be properly encoded by the SALSA file creator using UTF-8.
+
+The "name" value MUST use the reverse domain name notation and it allows to uniquely identify a specific organization or company (or an individual) that has added a specific "extra" object to the format. The usage of reverse domain name notation also allows to create and distinguish different types (or sub-types) of "extra" objects used by a given organization.
 
 ###4.3 Specifying protocol names in SALSA
 
