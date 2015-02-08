@@ -5,25 +5,25 @@ SALSA Format 0.7 Specification
 
 ##*Abstract*
 
-*This document is a description of Simple Application-Level-Signaling Archive (SALSA) format that can be used to easily log, annotate, exchange and process packet flows of different text-based signaling protocols that are used in modern web or VoIP applications. The need in such a format was largely inspired by the proliferation of WebRTC-based solutions. Yet, it is not limited to WebRTC by any means. For example, this same format can also be useful in the area of traditional SIP-based telephony.*
+*This document is a description of Simple Application-Level-Signaling Archive (SALSA) format that can be used to easily log, annotate, exchange and process packet flows of different signaling protocols that are used in modern web- or VoIP-applications. SALSA is a JSON-based format and is aimed at providing easier interoperability, extensibility and allowing to efficiently create and process signaling logs at the application level, where the usage of more traditional binary-based packet capture formats, like PCAP or PcapNG, can be difficult or even impossible.*
 
 ##1 Motivation behind proposing the SALSA format
 
-Network traces can be collected with tools like Wireshark and saved in such file formats as PCAP or PcapNG. That gives engineers a very precise and detailed picture about what was going on at all levels of the networking stack, up from the data link layer, at a specific network point and during a specific period of time. Unfortunately, in many cases such a deep level of underlying protocol details and the binary formats used to store them make handling the captured flows of application-level signaling protocols unnecessarily complex or even impossible. Some major issues around that are as follows:
+Network traces can be collected and examined with dedicated tools like Wireshark and saved using special file formats, such as PCAP or PcapNG. These formats allow to capture a very precise and detailed picture about what was going on at all the levels of networking stack, up from the data link layer, at a particular network point and during a specific period of time. Unfortunately, in many practical cases, the amount of information about lower-level protocols (from data link to transport) and the necessity to deal with all-binary format structure of those files largely prevent many other applications and tools from being able to directly create and process such files themselves. Some major issues related to that are as follows:
 
-* Existing libraries (especially open-source ones) that are intended to read PCAP and similar file formats often fail to correctly handle the TCP message framing and cannot properly re-assemble the application-level signaling protocol packets.
-* The traffic coming between the endpoints is typically encrypted these days. Thus, trying to capture details somewhere outside the actual applications that send and receive data will often not allow to look at the actual signaling packets being exchanged over such an encrypted channel.
+* Existing libraries (especially open-source ones) that are intended to read PCAP and similar file formats often fail to correctly handle the TCP message framing and thus cannot properly re-assemble the application-level signaling protocol packets.
+* The traffic coming between endpoints is typically encrypted these days. Thus, trying to capture details somewhere outside the actual applications that send and receive data will often not allow to look at the actual signaling packets being exchanged over such an encrypted channel.
 * In the endpoint applications: Capturing into real PCAP or similar packet capture formats may be not possible and usually is not feasible. That is even more applicable to web browsers and web applications, as well as to mobile applications.
 
-Some of the modern communication libraries and frameworks do provide embedded logging capabilities so that they can log the details of signaling packets being exchanged by the applications. But those packet details are often mixed with some general debug or information printouts. And those logs are in different custom, incompatible formats. Thus, universally handling them in third-party applications is problematic.
+Some communication applications and diagnostic tools include embedded machanisms to log details about signaling packets being exchanged by the applications. But many of them are not specifically tailored for signaling packet capture and often mix those details with many other debug or informational printouts. And then, those logs usually come in different custom, incompatible formats. Thus, a good interoperability in handling them between third-party applications becomes very problematic.
 
-With that — and with some other practical needs — in mind, the Simple Application-Level-Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at being easy to create, easy to annotate, easy to parse and process the logged signaling packet data. Using it, developers and companies can quickly create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client-side and server-side communication applications.
+With all those — and with some other practical needs — in mind, the Simple Application-Level-Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at making it easy to create and annotate, easy to parse and process the logged signaling packet data. Using it, developers and companies can effectively create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client-side and server-side communication applications.
 
-The SALSA format is agnostic to the types of the signaling protocols that it contains. It may be used to archive call/session signaling, media signaling, or domain-specific signaling types (for example, signaling payloads used for monitoring or control of remote objects) — and the format can contain multiple types of signaling protocols at once.
+The SALSA format is largely agnostic to the actual protocol type(s) and details about the packets archived. It may be used to archive call/session signaling, media signaling, or domain-specific signaling types (for example, signaling payloads used for monitoring or control of remote objects) — and the format allows to store multiple types of protocols at once. If the SALSA users need to add their custom details, to make the format more protocol-aware or to tailor it to their spcific needs, they can do that with the "extras" mechanism provided by SALSA. 
 
 ###1.1 Why not HAR?
 
-The HTTP Archive (HAR) format is, indeed, somewhat similar to SALSA. Actually, SALSA was greatly inspired by HAR. But HAR was created largely with the HTTP specifics in mind. And it is tailored for HTTP, and not so much towards capturing and handling traces of arbitrary text-based signaling protocols used by VoIP and web-applications. This is why SALSA is proposed. (As a quick note: It is very easy to combine the "log" root entry of the HAR format and the "salsa" root entry of the SALSA format inside one parent JSON object, shall that be practically useful.)
+SALSA may resemble some people the HTTP Archive (HAR) format, at a high-level. Actually, SALSA was greatly inspired by HAR. But HAR was created largely with the HTTP-protocol specifics in mind. And it is tailored for HTTP, and not so much towards capturing and handling traces of arbitrary text-based or binary signaling protocols used by VoIP and web-applications. Thus HAR is not an alternative to SALSA for the purposes described above.
 
 ##2 Conformance requirements
 
@@ -39,6 +39,8 @@ Conformance requirements phrased as algorithms or specific steps may be implemen
 
 * The construction "a Foo object", where Foo is actually an interface, is sometimes used instead of the more accurate "an object implementing the interface Foo".
 
+* The construction "SALSA file" is used throughout this document in the sense "a file properly created and formatted according to the SALSA specification".
+
 * __SALSA file creator.__ An application or a software component (library, module, web service, etc.) that produces a ready file conformant with all the requirement of this specification. Please, note that a SALSA file creator is not necessarily doing the actual packet logging activities. For example, it may instead be a tool convering existing packet capture files (represented, for example, in a binary format like PCAP or PcapNG) into the SALSA format. It may also be a tool to re-format, or merge together, or filter existing files in the SALSA format.
 
 * __Packet logger.__ An application or a software component (library, module, web service, etc.) that does the actual logging (either complete capturing and sniffing, or just "dumping") of the network packets to be, eventually, archived in a file using the SALSA format. Please, note that a packet logger does not necessarily create ready files in the SALSA format. It may instead save the results in some other format that a SALSA file creator will later read and then create a SALSA-formatted file based on it. It may also be directly passing the packets being logged to a SALSA file creator for further processing (for example, using module APIs inside one application, or over some system-level or network-level connection mechanisms).
@@ -47,15 +49,13 @@ Conformance requirements phrased as algorithms or specific steps may be implemen
 
 * __UTC.__ Coordinated Universal Time as maintained by the Bureau International des Poids et Mesures (BIPM).
 
-* The construction "SALSA file" is used throughout this document in the sense "a file properly created and formatted according to the SALSA specification".
-
 ##4 The SALSA format
 
 The SALSA format is based on JSON, as described in RFC 4627.
 
 ###4.1 Encoding
 
-A SALSA file is REQUIRED to be saved in UTF-8 encoding. Other encodings are forbidden. A reader MUST ignore a byte-order mark if it exists in the file, and a writer MAY emit a byte-order mark in the file.
+A SALSA file is REQUIRED to be saved in UTF-8 encoding. Other encodings are forbidden. A SALSA file consumer MUST ignore a byte-order mark if it exists in the file, and a SALSA file creator MAY emit a byte-order UTF-8 mark in the file.
 
 ###4.2 List of objects
 
