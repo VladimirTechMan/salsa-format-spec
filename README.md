@@ -217,7 +217,7 @@ Any "extra" object MUST contain the following key/value pair in it:
 
 Following the general requirements to the SALSA files, any keys and values added inside a custom "extra" object MUST be properly encoded by the SALSA file creator using UTF-8.
 
-The "name" value MUST use the reverse domain name notation and it allows to uniquely identify a specific organization or company (or an individual) that has added a specific "extra" object to the format. The usage of reverse domain name notation also allows to create and distinguish different types (or sub-types) of "extra" objects used by a given organization.
+The "name" value MUST use the reverse domain name notation, which will allow to uniquely identify a specific organization or company (or an individual) that has added a specific "extra" object to the format. The name can also include additional sub-domains, to introduce and identify different types (or sub-types) of "extra" objects used by a given organization.
 
 ###4.3 Specifying protocol names in SALSA
 
