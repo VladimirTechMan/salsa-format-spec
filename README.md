@@ -5,7 +5,7 @@ SALSA Format 0.7 Specification
 
 ##*Abstract*
 
-*This document is a description of Simple Application-Level-Signaling Archive (SALSA) format that can be used to easily log, annotate, exchange and process packet flows of different signaling protocols that are used in modern web- or VoIP-applications. SALSA is a JSON-based format and is aimed at providing easier interoperability, extensibility, and at allowing to efficiently create and process signaling logs at the application level, where the usage of more traditional binary-based packet capture formats, like PCAP or PcapNG, can be difficult or even impossible.*
+*This document is a description of Simple Application-Level-Signaling Archive (SALSA) format that can be used to easily log, annotate, exchange and process packet flows of different signaling protocols that are used in modern web- or VoIP-applications. SALSA is a JSON-based format and is aimed at providing easier interoperability, extensibility, and at allowing to efficiently create and process signaling logs on the application level, where the usage of more traditional binary-based packet capture formats, like PCAP or PcapNG, can be difficult or even impossible.*
 
 ##1 Motivation behind proposing the SALSA format
 
