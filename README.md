@@ -15,11 +15,11 @@ Network traces can be collected and examined with dedicated tools like Wireshark
 * The traffic coming between endpoints is typically encrypted these days. Thus, trying to capture details somewhere outside the actual applications that send and receive data will often not allow to look at the actual signaling packets being exchanged over such an encrypted channel.
 * In the endpoint applications: Capturing into real PCAP or similar packet capture formats may be not possible and usually is not feasible. That is even more applicable to web browsers and web applications, as well as to mobile applications.
 
-Some communication applications and diagnostic tools include embedded machanisms to log details about signaling packets being exchanged by the applications. But many of them are not specifically tailored for signaling packet capture and often mix those details with many other debug or informational printouts. And then, those logs usually come in different custom, incompatible formats. Thus, a good interoperability in handling them between third-party applications becomes very problematic.
+Some communication applications and diagnostic tools have embedded machanisms in them, to log details about signaling packets being exchanged. But these mechnisms are usually not specifically tailored for packet archiving and they often mix those details with many other debug or informational printouts. In addition, those logs usually come in different custom, incompatible formats. Thus, a good interoperability in handling them between third-party applications becomes very problematic.
 
-With all those — and with some other practical needs — in mind, the Simple Application-Level-Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at making it easy to create and annotate, easy to parse and process the logged signaling packet data. Using it, developers and companies can effectively create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client-side and server-side communication applications.
+With all those and some other practical needs in mind, the Simple Application-Level-Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at making it easy to create and annotate, easy to parse and process the logged signaling packet data. Using it, developers and companies can effectively create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client-side and server-side communication applications.
 
-The SALSA format is largely agnostic to the actual protocol type(s) and details about the packets archived. It may be used to archive call/session signaling, media signaling, or domain-specific signaling types (for example, signaling payloads used for monitoring or control of remote objects) — and the format allows to store multiple types of protocols at once. If the SALSA users need to add their custom details, to make the format more protocol-aware or to tailor it to their spcific needs, they can do that with the "extras" mechanism provided by SALSA. 
+The SALSA format is largely agnostic to the actual protocol type(s) and details about the packets archived. It may be used to archive call and session signaling, media signaling, or domain-specific signaling types (for example, signaling payloads used for monitoring or control of remote objects) — and the format allows to deal with multiple types of protocols at once. If the users of SALSA need to add their custom details, to make the basic format more protocol-aware or to tailor it to their spcific needs, they can do that using the "extras" mechanism avaialble in SALSA. 
 
 ###1.1 Why not HAR?
 
@@ -74,7 +74,7 @@ This object represents the root of the exported data. This object MUST be presen
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
  "packets"   | array   | Required. An array of objects of type "packet", where each object represents a logged signaling protocol packet.
- "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not (yet) support.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not support.
 
 ####*4.2.1.1 "startedDateTime"*
 
@@ -98,13 +98,13 @@ Providing the "duration" value is RECOMMENDED in the cases where the packet logg
 
 ####*4.2.1.3 "transport" and "protocol"*
 
-For the sake of compatibility, all string values for "protocol" and "transport" MUST be in the lower case. For specific requirements on naming the "protocol" entries, please, refer to section 4.3.
+For the sake of compatibility, all string values for "protocol" and "transport" MUST be in the lower case. For specific requirements and recommendations on naming the "protocol" entries, please, refer to section 4.3.
 
 For the "transport" entry, the following values are suggested in this version of the SALSA format: "udp", "tcp", "websocket", "webrtc-datachannel". Please, note that in this case the transport name is not necessarily limited to the actual transport protocol being used (as "udp" and "tcp" are, for example), but may also reflect the actual mechanism being used to exchange the signaling packets (for instance, "websocket", which is built on top of TCP, or "webrtc-datachannel", which is essentially SCTP over UDP). (Going forward, more values may be added. For example, it is not clear yet if adding "tls" and "dtls", to augment more general "tcp" and "udp" transports, would be beneficial for practical purposes of SALSA.)
 
 Providing the "protocol" entry in the "salsa" object is RECOMMENDED in case if all the packets represented by objects inside the "packets" array belong to the same signaling protocol. Providing the "transport" entry in the "salsa" object is RECOMMENDED in case if all the packets represented by objects inside the "packets" array are exchanged over the same transport mechanism. When the "protocol" entry or the "transport" entry in the "salsa" object is provided, the SALSA file creator SHOULD NOT provide the corresponding individual "protocol" or "transport" entries in the "packet" objects inside the "packets" array.
 
-The SALSA file creator SHOULD provide the values of "transport" and "protocol" entries whenever that information is readily available to it. When a SALSA file creator cannot identify the actual transport mechanism or the actual signaling protocol being used, or in case where identifying them would require taking additional steps that would notably affect the expected responsiveness characteristics of the application, the SALSA file creator MAY opt for not providing that information in the file.
+The SALSA file creator SHOULD specify the "transport" and "protocol" values whenever that information is readily available or can be determined sufficiently quickly (that is, without notably affecting the expected responsiveness characteristics of the application).
 
 ####4.2.2 creator
 
@@ -144,7 +144,7 @@ The "packets" array represents a time-ordered sequence of the logged signaling p
  "format"    | string  | Optional. The format of the "body" entry in the current "packet" object. If omitted, "plain-text" MUST be assumed and used.
  "body"      | *depending on "format" specified* | Required. The actual data of archived signaling packet, represented according to the specified "format".
  "comment"   | string  | Optional. A comment provided by the user or the application about the packet itself or about the part of interaction between source and destination that the packet is used for.
- "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not (yet) support.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not support.
 
 The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
 
@@ -160,11 +160,13 @@ The SALSA format uses a string representation of timestamps, rather than the num
 
 ####*4.2.4.2 "transport" and "protocol"*
 
-The SALSA file creator SHOULD specify a "protocol" value for each "packet" object, unless it has specified the "protocol" value in the "salsa" object (which signals that all the packets represent the same protocol). When the "protocol" value in the "salsa" object is specified, the SALSA file creator SHOULD NOT specify the "protocol" value for each packet.
+The SALSA file creator SHOULD specify a "protocol" value for each "packet" object, unless it has specified the "protocol" value in the "salsa" object (which signals that all packets in the SALSA file represent the same protocol). When the "protocol" value in the "salsa" object is specified, the SALSA file creator SHOULD NOT specify the "protocol" value for each packet.
 
-For specific requirements on naming the "protocol" entries, please, refer to section 4.3.
+For specific requirements and recommendations on naming the "protocol" entries, please, refer to section 4.3.
 
 The SALSA file creator SHOULD specify a "transport" value for each "packet" object, unless it has specified the "transport" value in the "salsa" object (which signals that all the packets are transmitted over the same transport mechanism). When the "transport" value in the "salsa" object is specified, the SALSA file creator SHOULD NOT specify the "transport" value for each packet.
+
+For some more general considerations and requirements on "transport" and "protocol" check section 4.2.1.3
 
 ####*4.2.4.3 "format" and "body"*
 
@@ -176,9 +178,9 @@ The value of "format" string defines how the contents of the "body" string was e
 * "plain-text": The "body" value in the "packet" object MUST be a UTF-8-encoded string that is byte-equal to the body of the original packet. Thus, this format option MAY be applied only when the original packet body is properly encoded using UTF-8.
 * "plain-text-chunks": The "body" value in the "packet" object MUST be an array of strings (called "chunks"), each of which is properly encoded with UTF-8. The concatenation of all those strings, in the order that they have inside the array, MUST result in a string that is byte-equal to the body of the original packet. Thus, this format option MAY be applied only when the original packet body is properly encoded using UTF-8.
 
-The SALSA file creator MAY use either "plain-text" or "plain-text-chunks" format options if the body of the original packet is guaranteed, from the application context, to have a valid UTF-8 encoding or if there is a sufficiently quick way to verify that it has a proper UTF-8 encoding. For all other cases, the SALSA file creator MUST use the "base64" format option to represent the packet body.
+The SALSA file creator MAY use either "plain-text" or "plain-text-chunks" if the body of the packet is guaranteed, from the application context or in some other way, to have a valid UTF-8 encoding or if there is a sufficiently quick way to verify that it has a valid UTF-8 encoding. For all other situations, the SALSA file creator MUST use the "base64" format option to represent the packet body in the SALSA file.
 
-When the usage of "plain-text" and "plain-text-chunks" format options is applicable, it is up to the SALSA file creator implementation or to its users to decide which of the two options to use. In general, whenever a more compact representation of a file in the SALSA format is desireable, it is RECOMMENDED to use the "plain-text" format. Using the "plain-text-chunks" format option is mainly recommended for the cases when it is desireable that the target IT personnel can directly inspect (read) the resulting SALSA file as a plain text file. For that purpose, it is additionally RECOMMENDED to split the original packet body into a sequence of strings ("chunks") so that each string matches a separate line in the original packet body and is explicitly finished by the known end-of-line (EOL) character sequence, if any, defined in the specification of the corresponding signaling protocol.
+When the usage of "plain-text" and "plain-text-chunks" format options is applicable, it is up to the SALSA file creator implementation or the end user's preferences to decide which of the two format options to use. In general, whenever a more compact representation of SALSA file is desireable, it is RECOMMENDED to use the "plain-text" format. Using the "plain-text-chunks" format is mainly recommended when it is desireable that the target end users of the SALSA file can directly inspect (read) it as a plain text file (for example, using a basic text editor or viewer). For that purpose, it is additionally RECOMMENDED to split the original packet body into a sequence of strings ("chunks") so that each string matches a separate line in the original packet body and is explicitly finished by the known end-of-line (EOL) character sequence, if any, defined in the specification of the corresponding signaling protocol.
 
 ####4.2.5 src and dst
 
@@ -188,16 +190,16 @@ The "src" object identifies the source (sender) of signaling protocol packet. Th
  ----------|---------|------------
  "name"    | string  | Required. The symbolic name of the signaling packet sender (for the "src" object) or receiver (for the "dst" object).
  "ipaddr"  | string  | Optional. The IP address, if applicable and known, of the signaling packet sender or receiver.
- "port"    | number  | Optional. The TCP/UDP/SCTP port, if applicable and know, of the signaling packet sender or receiver.
- "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not (yet) support.
+ "port"    | number  | Optional. The TCP/UDP/SCTP port, if applicable and known, of the signaling packet sender or receiver.
+ "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not support.
 
-The "name" string value MUST be encoded in UTF-8, and it MUST be provided inside each "src" and "dst" object in a SALSA file. The "name" value MUST be unique for every distinct network socket used to send or receive packets archived in a given SALSA file. (For the purpose of this document, the term "network socket" is used in its generic sense, as "an endpoint of an inter-process communication flow inside a computer system or across a computer network".)
+The "name" string value MUST be encoded in UTF-8. The SALSA file creator MUST provide it for each "src" and "dst" object in the file. The "name" value MUST be unique for every distinct network socket used for sending or receiving packets and reflected in the file. (For the purposes of this document, the term "network socket" is used in its generic sense, as "an endpoint of an inter-process communication flow inside a computer system or across a computer network".)
 
 In addition to being a unique identifier of distinct packet senders and receivers, the "name" value MAY also serve the purpose of better documenting/annotating the actual functions (roles) of those individual senders and receivers. (For example, a convenient human-readable custom naming approach can be established and consistently applied.) Note that the users of a SALSA file MAY change or extend those unique names (annotations) at any later point in time, by completely replacing an existing unique name with a more descriptive one, which MUST still be unique in the updated file.
 
-When the captured application signaling uses an IP network, and the IP address or port are known to the SALSA file creator, or they can be determined sufficiently quickly, the SALSA file creator SHOULD provide the corresponding "ipaddr" and "port" values in the corresponding "src" and "dst" objects. The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses. The "port" value MUST be a positive integer numeric value.
+When the captured application-level signaling goes over IP network socket(s), and the IP address or port are known to the SALSA file creator, or they can be determined sufficiently quickly, the SALSA file creator SHOULD provide the corresponding "ipaddr" and "port" values in the corresponding "src" and "dst" objects. The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses. The "port" value MUST be a positive integer numeric value.
 
-If the "ipaddr" and "port" values are available, and there is no better naming scheme available, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, the name MAY be formatted like "192.168.34.17:5070" in case of IPv4 and like "[1fff:0:a88:85a3::ac1f]:80" in case of IPv6.
+If the "ipaddr" and "port" values are known, and there is no better naming scheme available, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, in case of IPv4 the name MAY be formatted like "192.168.34.17:5070" and in case of IPv6 (like "[1fff:0:a88:85a3::ac1f]:80"z in case of IPv6) .
 
 ####4.2.6 extras
 
