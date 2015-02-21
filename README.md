@@ -66,8 +66,8 @@ This object represents the root of the exported data. This object MUST be presen
   JSON Name  |JSON Type| Description
  ------------|---------|------------
  "packets"   | array   | Required. An array of objects of type "packet", where each object represents a logged signaling protocol packet.
- "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array (applicable only when it is the same for all packets).
- "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array (applicable only when it is the same for all packets).
+ "protocol"  | string  | Optional. The name of the protocol being represented by all the entries in the "packets" array (applicable only when the protocol is the same for all packets).
+ "transport" | string  | Optional. The name of the transport mechanism being used to exchange all the packets represented by the "packets" array (applicable only when all packets have the same transport).
  "startedDateTime" | string | Optional. The timestamp of the moment when the packet logging activity actually started. The value is formatted according to a subset of formats defined in ISO 8601 (*see details below*).
  "duration"  | string  | Optional. Total duration of the packet logging activity, in seconds.
  "geolocation" | object | Optional. The geographical position (coordinates) where the packets were logged by packet logger and the accuracy of representation.
