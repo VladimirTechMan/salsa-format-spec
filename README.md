@@ -1,4 +1,4 @@
-SALSA Format 0.7 Specification
+SALSA Format 0.8 Specification
 ==============================
 
 **Author: Vladimir "*VladimirTechMan*" Beloborodov**, \<VladimirTechMan@gmail.com\>
@@ -21,9 +21,9 @@ With all those and some other practical needs in mind, the Simple Application-Le
 
 The SALSA format is largely agnostic to the actual protocol type(s) and details about the packets archived. It may be used to archive call and session signaling, media signaling, or domain-specific signaling types (for example, signaling payloads used for monitoring or control of remote objects) — and the format allows to deal with multiple types of protocols at once. If the users of SALSA need to add their custom details, to make the basic format more protocol-aware or to tailor it to their spcific needs, they can do that using the "extras" mechanism avaialble in SALSA. 
 
-###1.1 Why not HAR?
+###1.1 Comparison to HTTP Archive (HAR) format
 
-SALSA may resemble some people the HTTP Archive (HAR) format, at a high-level. Actually, SALSA was greatly inspired by HAR. But HAR was created largely with the HTTP-protocol specifics in mind. And it is tailored for HTTP, and not so much towards capturing and handling traces of arbitrary text-based or binary signaling protocols used by VoIP and web-applications. Thus HAR is not an alternative to SALSA for the purposes described above.
+SALSA may resemble some people the HTTP Archive (HAR) format, at a high-level. Actually, SALSA was partly inspired by HAR. But HAR was created largely with the HTTP-protocol specifics in mind. And it is tailored for HTTP, and not so much towards capturing and handling traces of arbitrary text-based or binary protocols used by VoIP and web-applications. Thus HAR is not an alternative to SALSA for the purposes described in section 1.
 
 ##2 Conformance requirements
 
@@ -65,6 +65,7 @@ This object represents the root of the exported data. This object MUST be presen
 
   JSON Name  |JSON Type| Description
  ------------|---------|------------
+ "packets"   | array   | Required. An array of objects of type "packet", where each object represents a logged signaling protocol packet.
  "version"   | string  | Required. Version number of the SALSA format used for the given file.
  "creator"   | object  | Optional. An object of type creator that contains the information about SALSA file creator.
  "startedDateTime" | string | Optional. The timestamp of the moment when the packet logging activity actually started. The value is formatted according to a subset of formats defined in ISO 8601 (*see details below*).
@@ -73,7 +74,6 @@ This object represents the root of the exported data. This object MUST be presen
  "comment"   | string  | Optional. A comment provided by the user or the application.
  "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
  "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
- "packets"   | array   | Required. An array of objects of type "packet", where each object represents a logged signaling protocol packet.
  "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not support.
 
 ####*4.2.1.1 "startedDateTime"*
@@ -132,7 +132,7 @@ All values of "accuracy" and "altitudeAccuracy" MUST be non-negative real number
 
 ####4.2.4 packets
 
-The "packets" array represents a time-ordered sequence of the logged signaling packets. The "packet" object has the following name/value pairs:
+The "packets" array represents logged signaling packets. Each "packet" object has the following name/value pairs:
 
   JSON Name  |JSON Type| Description
  ------------|---------|------------
@@ -146,7 +146,9 @@ The "packets" array represents a time-ordered sequence of the logged signaling p
  "comment"   | string  | Optional. A comment provided by the user or the application about the packet itself or about the part of interaction between source and destination that the packet is used for.
  "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not support.
 
-The "packet" objects inside the "packets" array MUST be in the ascending order, according to the numerical equivalents of "time" string values in these objects.
+The SALSA file creator SHOULD order (sort) all "packet" objects inside the "packets" array according to the numerical equivalents of "time" string values in these objects, starting from the smallest value (that is, from the oldest packet).
+
+A SALSA file consumer MUST always ensure that the "packet" objects in the "packets" array are ordered (sorted) as required for its purposes.
 
 ####*4.2.4.1 "time"*
 
