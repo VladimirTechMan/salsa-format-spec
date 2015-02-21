@@ -1,11 +1,6 @@
 {
   "salsa": {
-    "version": "0.7",
-    "creator": {
-      "name": "TShark exporter to the Simple Application-Level-Signaling Archive (SALSA) format",
-      "version": "0.3"
-    },
-    "startedDateTime": "2005-01-14T11:58:02.965944",
+    "version": "0.8",
     "packets": [
       {
         "time": "0.000000",
@@ -456,6 +451,11 @@
           "\r\n"
         ]
       }
-    ]
+    ],
+    "startedDateTime": "2005-01-14T20:58:02.965944",
+    "creator": {
+      "name": "TShark exporter to the Simple Application-Level-Signaling Archive (SALSA) format",
+      "version": "0.3"
+    }
   }
 }
