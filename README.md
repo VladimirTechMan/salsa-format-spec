@@ -66,14 +66,14 @@ This object represents the root of the exported data. This object MUST be presen
   JSON Name  |JSON Type| Description
  ------------|---------|------------
  "packets"   | array   | Required. An array of objects of type "packet", where each object represents a logged signaling protocol packet.
- "version"   | string  | Required. Version number of the SALSA format used for the given file.
- "creator"   | object  | Optional. An object of type creator that contains the information about SALSA file creator.
+ "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
+ "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
  "startedDateTime" | string | Optional. The timestamp of the moment when the packet logging activity actually started. The value is formatted according to a subset of formats defined in ISO 8601 (*see details below*).
  "duration"  | string  | Optional. Total duration of the packet logging activity, in seconds.
  "geolocation" | object | Optional. The geographical position where the packets were logged by packet logger. 
+ "version"   | string  | Required. Version number of the SALSA format used for the given file.
+ "creator"   | object  | Optional. An object of type creator that contains the information about SALSA file creator.
  "comment"   | string  | Optional. A comment provided by the user or the application.
- "protocol"  | string  | Optional. The name of the signaling protocol being represented by all the entries in the "packets" array.
- "transport" | string  | Optional. The name of the transport being used to exchange all the packets represented by the "packets" array.
  "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not support.
 
 ####*4.2.1.1 "startedDateTime"*
