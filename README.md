@@ -219,7 +219,7 @@ Any "extra" object MUST comply with the following requirements to its specific k
  "version" | string  | Optional. The version number of the format of the current "extra" object. The decision and details about using versioning with an "extra" object format are with the people responsible for that format.
  "comment" | string  | Optional. A comment related to the current "extra" object and provided by the user or the application.
 
-Following the general requirements to the SALSA files, any keys and values added inside a custom "extra" object MUST be properly encoded by the SALSA file creator using UTF-8.
+Following the general requirements to the SALSA files, any keys and values added inside a custom "extra" object MUST be properly encoded by the SALSA file creator using UTF-8 and comply with the JSON format requirements (RFC 4627).
 
 The "name" value MUST use the reverse domain name notation, which will allow to uniquely identify a specific organization or company (or an individual) that has added a specific "extra" object to the format. The name MAY also include any additional sub-domains, to introduce and identify different types (or sub-types) of "extra" objects used by a given organization.
 
