@@ -211,11 +211,13 @@ The "extras" array contains a set of "extra" objects, each of which provides som
 
 Aside from the requirements explicitly given in this SALSA specification, including the current section, the actual contents and semantics of individual "extra" objects in an "extras" array is completely outside the scope of this document. It is the responsibility of the organizations or individuals adding their own (custom) "extra" objects to SALSA files to define or re-define, and to properly create and handle the actual format and contents of those objects. It is up to such organizations and individuals to decide if they want to provide any formal specifications of their custom "extra" object(s) to the public. But it is advisable to do so, as that practice may help external users to get more useful details from the customized SALSA files that they receive. In addition, if some specific detail(s) start to appear in many customized SALSA files used in the field, that itself may signal a need to consider and provide a corresponding generic mechanism, to express those details, in the core SALSA format specification.
 
-Any "extra" object MUST contain the following key/value pair in it:
+Any "extra" object MUST comply with the following requirements to its specific key/value pairs:
 
   JSON Name|JSON Type| Description
  ----------|---------|------------
  "name"    | string  | Required. Provides a unique name identifier for the given "extra" object, in the reverse domain name notation.
+ "version" | string  | Optional. The version number of the format of the current "extra" object. The decision and details about using versioning with an "extra" object format are with the people responsible for that format.
+ "comment" | string  | Optional. A comment related to the current "extra" object and provided by the user or the application.
 
 Following the general requirements to the SALSA files, any keys and values added inside a custom "extra" object MUST be properly encoded by the SALSA file creator using UTF-8.
 
