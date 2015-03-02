@@ -10,7 +10,6 @@ SALSA Format 0.8 Specification
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 ###Table of Contents   (*generated with [DocToc](https://github.com/thlorenz/doctoc)*)
-
 - [1 Motivation behind proposing the SALSA format](#1-motivation-behind-proposing-the-salsa-format)
   - [1.1 Comparison to HTTP Archive (HAR) format](#11-comparison-to-http-archive-har-format)
 - [2 Conformance requirements](#2-conformance-requirements)
