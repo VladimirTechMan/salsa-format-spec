@@ -45,10 +45,10 @@ SALSA Format 0.8 Specification
 Network traces can be collected and examined with dedicated tools like Wireshark and stored using special file formats, such as PCAP or PcapNG. These formats allow to capture a very precise and detailed picture about what was going on at all the levels of networking stack, up from the data-link layer, at a particular network point and during a specific period of time. Unfortunately, in many practical cases, the necessity to unwrap and re-assemble information from lower-level protocols and to deal with all-binary format structure of those files largely prevent new applications and tools from being able to easily and efficiently create and process such files themselves. Some major issues related to that are as follows:
 
 * The traffic coming between endpoints is typically encrypted. Thus, trying to capture details somewhere outside the actual applications that send and receive data does not help in checking the actual signaling packets exchanged over a secured channel.
-* For many real-time communication applications, archiving with PCAP or similar packet capture formats may be impossible or not feasible. That is especially true for web applications and cleints, as well as for mobile applications.
+* For many real-time communication applications, archiving with PCAP or similar packet capture formats may be impossible or not feasible. That is especially true for web applications and clients, as well as for mobile applications.
 * Existing libraries (especially open-source ones) that are intended to read PCAP and similar file formats often fail to correctly handle the TCP message framing and thus cannot properly re-assemble the application-level signaling protocol packets.
 
-Some communication applications and diagnostic tools offer embedded machanisms in them, to log details about signaling packets being exchanged. But such mechanisms are usually not specifically tailored for packet archiving and they often mix those details with many other debug or informational printouts. In addition, those logs usually come in some custom, incompatible formats. Thus, a good interoperability in handling them between third-party applications is problematic.
+Some communication applications and diagnostic tools offer embedded mechanisms in them, to log details about signaling packets being exchanged. But such mechanisms are usually not specifically tailored for packet archiving and they often mix those details with many other debug or informational printouts. In addition, those logs usually come in some custom, incompatible formats. Thus, a good interoperability in handling them between third-party applications is problematic.
 
 With all those and some other practical needs in mind, the Simple Application-Level-Signaling Archive (SALSA) format is proposed. It is a simple, concise JSON-based format that aims at making it easy to create and annotate, parse and process packet data. Using SALSA, individuals and companies can be better equipped to create different types of handy engineering tools, like those for call-flow visualizations or automatic test script generation. And such tools, handling specific signaling protocols, can now become much more compatible with each other and with the signaling libraries and components of client-side and server-side communication applications.
 
@@ -90,15 +90,15 @@ The SALSA format is based on JSON, as described in RFC 4627.
 
 ####4.1.1 Encoding
 
-A SALSA file MUST be a text file saved in UTF-8 encoding. Other encodings are forbidden. A SALSA file consumer MUST ignore a byte-order mark if it exists in the file, and a SALSA file creator MAY emit a byte-order UTF-8 mark in the file.
+A SALSA file MUST be a text file saved in UTF-8 encoding. Other encodings are forbidden. A SALSA file consumer MUST ignore a byte-order mark (BOM) if it exists in the file, and a SALSA file creator MAY emit a byte-order UTF-8 mark in the file.
 
 ####4.1.2 File Name Extension
 
-A SALSA file creator SHOULD use the _*.salsa_ file name extension for the created SALSA files unless it is explicitly configured to use a different extension.
+A SALSA file creator SHOULD use the _\*.salsa_ file name extension for the created SALSA files unless it is explicitly configured to use a different extension.
 
 ####4.1.3 Optional compression
 
-To reduce the size of SALSA files for the purpose of storing or sending them, the SALSA file creator or the end users MAY compress the original text file using any available compression method and utility, as convenient. The details associated with that process and file naming are out of scope for this specification. In particular, any appropriate file name extension MAY be used in such a case. (As an example, for ZIP-compressed SALSA files the _*.salz_ file name extension could be used.)
+To reduce the size of SALSA files for the purpose of storing or sending them, the SALSA file creator or the end users MAY compress the original text file using any available compression method and utility, as convenient. The details associated with that process and file naming are out of scope for this specification. In particular, any appropriate file name extension MAY be used in such a case. (As an example, for ZIP-compressed SALSA files the _\*.salz_ file name extension could be used.)
 
 ###4.2 List of objects
 
@@ -235,7 +235,7 @@ The "src" object identifies the source (sender) of signaling protocol packet. Th
  ----------|---------|------------
  "name"    | string  | Required. The symbolic name of the signaling packet sender (for the "src" object) or receiver (for the "dst" object).
  "ipaddr"  | string  | Optional. The IP address, if applicable and known, of the signaling packet sender or receiver.
- "port"    | number  | Optional. The TCP/UDP/SCTP port, if applicable and known, of the signaling packet sender or receiver.
+ "port"    | number  | Optional. The port (e.g. a TCP, UDP, or SCTP port), if applicable and known, used by the signaling packet sender or receiver.
  "extras"    | array   | Optional. An array of objects of type "extra" that contain any vendor- or protocol-specific additional details that the SALSA format itself cannot or does not support.
 
 The "name" string value MUST be encoded in UTF-8. The SALSA file creator MUST provide it for each "src" and "dst" object in the file. The "name" value MUST be unique for every distinct network socket used for sending or receiving packets and reflected in the file. (For the purposes of this document, the term "network socket" is used in its generic sense, as "an endpoint of an inter-process communication flow inside a computer system or across a computer network".)
@@ -244,7 +244,7 @@ In addition to being a unique identifier of distinct packet senders and receiver
 
 When the captured application-level signaling goes over IP network socket(s), and the IP address or port are known to the SALSA file creator, or they can be determined sufficiently quickly, the SALSA file creator SHOULD provide the corresponding "ipaddr" and "port" values in the corresponding "src" and "dst" objects. The "ipaddr" string value MUST be formatted according to the standard dotted decimal representation for IPv4 addresses, and according to the string formats recommended in RFC 5952 for IPv6 addresses. The "port" value MUST be a positive integer numeric value.
 
-If the "ipaddr" and "port" values are known, and there is no better naming scheme available, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, in case of IPv4 the name MAY be formatted like "192.168.34.17:5070" and in case of IPv6 (like "[1fff:0:a88:85a3::ac1f]:80"z in case of IPv6) .
+If the "ipaddr" and "port" values are known, and there is no better naming scheme available, the "name" string value SHOULD be a combination of the "ipaddr" and "port" values with an appropriate formatting applied to them. For example, in case of IPv4 the name MAY be formatted like "192.168.34.17:5070" and in case of IPv6 the name MAY be formatted like "[1fff:0:a88:85a3::ac1f]:80".
 
 ####4.2.6 extras
 
