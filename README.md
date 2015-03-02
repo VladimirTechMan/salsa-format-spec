@@ -7,6 +7,36 @@ SALSA Format 0.8 Specification
 
 *This document is a description of Simple Application-Level-Signaling Archive (SALSA) format that can be used to easily log, annotate, exchange and process packet flows of different signaling protocols that are used in modern web- or VoIP-applications. SALSA is a JSON-based format and is aimed at providing easier interoperability, extensibility, and at allowing to efficiently create and process signaling logs on the application level, where the usage of more traditional binary-based packet capture formats, like PCAP or PcapNG, can be difficult or even impossible.*
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+- [1 Motivation behind proposing the SALSA format](#1-motivation-behind-proposing-the-salsa-format)
+  - [1.1 Comparison to HTTP Archive (HAR) format](#11-comparison-to-http-archive-har-format)
+- [2 Conformance requirements](#2-conformance-requirements)
+- [3 Terminology and Definitions](#3-terminology-and-definitions)
+- [4 The SALSA format](#4-the-salsa-format)
+  - [4.1 Encoding](#41-encoding)
+  - [4.2 List of objects](#42-list-of-objects)
+    - [4.2.1 salsa](#421-salsa)
+    - [*4.2.1.1 "startedDateTime"*](#4211-starteddatetime)
+    - [*4.2.1.2 "duration"*](#4212-duration)
+    - [*4.2.1.3 "transport" and "protocol"*](#4213-transport-and-protocol)
+    - [4.2.2 creator](#422-creator)
+    - [4.2.3 geolocation](#423-geolocation)
+    - [4.2.4 packets](#424-packets)
+    - [*4.2.4.1 "time"*](#4241-time)
+    - [*4.2.4.2 "transport" and "protocol"*](#4242-transport-and-protocol)
+    - [*4.2.4.3 "format" and "body"*](#4243-format-and-body)
+    - [4.2.5 src and dst](#425-src-and-dst)
+    - [4.2.6 extras](#426-extras)
+  - [4.3 Specifying protocol names in SALSA](#43-specifying-protocol-names-in-salsa)
+- [5 Versioning Scheme](#5-versioning-scheme)
+- [6 Privacy](#6-privacy)
+- [7 References](#7-references)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ##1 Motivation behind proposing the SALSA format
 
 Network traces can be collected and examined with dedicated tools like Wireshark and saved using special file formats, such as PCAP or PcapNG. These formats allow to capture a very precise and detailed picture about what was going on at all the levels of networking stack, up from the data link layer, at a particular network point and during a specific period of time. Unfortunately, in many practical cases, the amount of information about lower-level protocols (from data link to transport) and the necessity to deal with all-binary format structure of those files largely prevent many other applications and tools from being able to directly create and process such files themselves. Some major issues related to that are as follows:
