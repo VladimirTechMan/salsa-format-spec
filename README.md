@@ -9,13 +9,17 @@ SALSA Format 0.8 Specification
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-###Table of Contents   (*generated with [DocToc](https://github.com/thlorenz/doctoc)*)
+###**Table of Contents**  *(generated with [DocToc](https://github.com/thlorenz/doctoc))*
+
 - [1 Motivation behind proposing the SALSA format](#1-motivation-behind-proposing-the-salsa-format)
   - [1.1 Comparison to HTTP Archive (HAR) format](#11-comparison-to-http-archive-har-format)
 - [2 Conformance requirements](#2-conformance-requirements)
 - [3 Terminology and Definitions](#3-terminology-and-definitions)
 - [4 The SALSA format](#4-the-salsa-format)
-  - [4.1 Encoding](#41-encoding)
+  - [4.1 SALSA File Packaging and Naming](#41-salsa-file-packaging-and-naming)
+    - [4.1.1 Encoding](#411-encoding)
+    - [4.1.2 File Name Extension](#412-file-name-extension)
+    - [4.1.3 Optional compression](#413-optional-compression)
   - [4.2 List of objects](#42-list-of-objects)
     - [4.2.1 salsa](#421-salsa)
     - [*4.2.1.1 "startedDateTime"*](#4211-starteddatetime)
@@ -82,9 +86,19 @@ Conformance requirements phrased as algorithms or specific steps may be implemen
 
 The SALSA format is based on JSON, as described in RFC 4627.
 
-###4.1 Encoding
+###4.1 SALSA File Packaging and Naming
 
-A SALSA file is REQUIRED to be saved in UTF-8 encoding. Other encodings are forbidden. A SALSA file consumer MUST ignore a byte-order mark if it exists in the file, and a SALSA file creator MAY emit a byte-order UTF-8 mark in the file.
+####4.1.1 Encoding
+
+A SALSA file MUST be a text file saved in UTF-8 encoding. Other encodings are forbidden. A SALSA file consumer MUST ignore a byte-order mark if it exists in the file, and a SALSA file creator MAY emit a byte-order UTF-8 mark in the file.
+
+####4.1.2 File Name Extension
+
+A SALSA file creator SHOULD use the _*.salsa_ file name extension for the created SALSA files unless it is explicitly configured to use a different extension.
+
+####4.1.3 Optional compression
+
+To reduce the size of SALSA files for the purpose of storing or sending them, the SALSA file creator or the end users MAY compress the original text file using any available compression method and utility, as convenient. The details associated with that process and file naming are out of scope for this specification. In particular, any appropriate file name extension MAY be used in such a case. (As an example, for ZIP-compressed SALSA files the _*.salz_ file name extension could be used.)
 
 ###4.2 List of objects
 
