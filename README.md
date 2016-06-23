@@ -3,7 +3,7 @@
 
 ####*Hi and welcome to the official repository for SALSA specs and samples.*
 
-A new version of SALSA is in active development. The format and core concepts behind
+A new version of SALSA (version 0.20) is in active development. The format and core concepts behind
 it have notably evolved in the past months and are much more mature now. You can expect
 many practical improvements and enhancements to the format in the coming release – 
 together with the first previews of open-source libraries and tools that produce and
